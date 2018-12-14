@@ -15,14 +15,13 @@ public class ItemXCustomizedSTDBlade extends ItemSlashBlade {
 		super(par2EnumToolMaterial, defaultBaseAttackModifier);
 	}
     static public ResourceLocation getModelTexture(ItemStack par1ItemStack){
-    //	JOptionPane.showMessageDialog(null,"Texture Work From XCustomizedBlade");
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         if(TextureName.exists(tag)){
             String textureName = TextureName.get(tag);
             ResourceLocation loc;
             if(!textureMap.containsKey(textureName))
             {
-            	loc = new ResourceLocation(InfoShow.getNowPath()+textureName+".png");
+            	loc = new ResourceLocation(InfoShow.getNowPath()+"\\"+textureName+".png");
                 textureMap.put(textureName,loc);
             }else{
                 loc = textureMap.get(textureName);
@@ -31,16 +30,14 @@ public class ItemXCustomizedSTDBlade extends ItemSlashBlade {
         }
         return ((ItemSlashBlade)par1ItemStack.getItem()).getModelTexture();
     }
-    
-    static public ResourceLocation getModelLocation(ItemStack par1ItemStack){
-  //  	JOptionPane.showMessageDialog(null,"Texture Work From XCustomizedBlade");
+    static  public ResourceLocation getModelLocation(ItemStack par1ItemStack){
         NBTTagCompound tag = getItemTagCompound(par1ItemStack);
         if(ModelName.exists(tag)){
             String modelName = ModelName.get(tag);
             ResourceLocation loc;
             if(!modelMap.containsKey(modelName))
             {
-            	loc = new ResourceLocation(InfoShow.getNowPath()+modelName+".png");
+            	loc = new ResourceLocation(InfoShow.getNowPath()+"\\"+modelName+".png");
                 modelMap.put(modelName,loc);
             }else{
                 loc = modelMap.get(modelName);

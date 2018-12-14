@@ -11,26 +11,31 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"BladeConfig\": [\r\n" + 
+				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"BladeModel\": \"model/1\",\r\n" + 
-				"      \"BladeTexture\": \"texture/1\",\r\n" + 
+				"      \"BladeShowName\": \"TestBlade[Original]\",\r\n" + 
+				"      \"BladeModel\": \"/model/1\",\r\n" + 
+				"      \"BladeTexture\": \"/texture/1\",\r\n" + 
 				"      \"BladeDamge\": 10.0,\r\n" + 
 				"      \"BladeDuration\": 200,\r\n" + 
 				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 1\r\n" + 
+				"      \"BladeSA\": 1,\r\n" + 
+				"      \"SwordColor\": 16711935 //Decimal Color Code\r\n" + 
 				"    },\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade2\",\r\n" + 
-				"      \"BladeModel\": \"model/2\",\r\n" + 
-				"      \"BladeTexture\": \"texture/2\",\r\n" + 
-				"      \"BladeDamge\": 100,\r\n" + 
+				"      \"BladeShowName\": \"TestBlade[Nano Technology]\",\r\n" + 
+				"      \"BladeModel\": \"/model/2\",\r\n" + 
+				"      \"BladeTexture\": \"/texture/2\",\r\n" + 
+				"      \"BladeDamge\": 1024,\r\n" + 
 				"      \"BladeDuration\": 2000,\r\n" + 
 				"      \"BladeWitched\": true,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 1\r\n" + 
+				"      \"BladeSA\": 1,\r\n" + 
+				"      \"SwordColor\": 16744192,\r\n" + 
+				"      \"Enchantment\": [ \"power\", 10, \"unbreaking\", 10 ]\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";

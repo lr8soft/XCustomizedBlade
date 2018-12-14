@@ -11,6 +11,8 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import mods.flammpfeil.slashblade.SlashBlade;
 
 public class CommonProxy {
+	private String lrsoft;
+	public CommonProxy() {lrsoft="Garbagge code(((";}
 	 public void preInit(FMLPreInitializationEvent event){
 		 ModInit minit=new ModInit();
 		 minit.checkInit();

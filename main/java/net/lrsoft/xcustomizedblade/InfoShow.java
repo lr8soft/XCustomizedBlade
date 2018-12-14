@@ -14,8 +14,11 @@ public class InfoShow {
 		if(type==0) {
 			JOptionPane.showMessageDialog(null,"XCustomizedBlade Error:\nConfig file can\'t be read!");
 			System.exit(-1);
+		}else if(type==-1){
+			JOptionPane.showMessageDialog(null,"XCustomizedBlade Error:\nConfig file format error!");
+			System.exit(-1);
 		}else {
-		
+			
 		}
 	}
 	 public static String getNowPath() {
