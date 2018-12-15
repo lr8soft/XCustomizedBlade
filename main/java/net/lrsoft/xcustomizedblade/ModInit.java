@@ -11,10 +11,12 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
+				"  \"XCustomizedBladeVER\": 0.8,\r\n" + 
+				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"BladeShowName\": \"TestBlade[Original]\",\r\n" + 
+				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
 				"      \"BladeDamge\": 10.0,\r\n" + 
@@ -22,11 +24,24 @@ public class ModInit {
 				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
 				"      \"BladeSA\": 1,\r\n" + 
-				"      \"SwordColor\": 16711935 //Decimal Color Code\r\n" + 
+				"      \"SwordColor\": 16711935, //Decimal Color Code\r\n" + 
+				"      \"BladeRecipe\": [\r\n" + 
+				"        \"phtc2\", //Enter modid here.\r\n" + 
+				"        \"SlashBlade.bladeWood\",\r\n" + 
+				"        \"normalingot\",\r\n" + 
+				"        \"normalingot\",\r\n" + 
+				"        \"normalingot\",\r\n" + 
+				"        \"energydust\",\r\n" + 
+				"        \"energydust\",\r\n" + 
+				"        \"energydust\",\r\n" + 
+				"        \"ph_hyperdiamond\",\r\n" + 
+				"        \"ph_hyperdiamond\",\r\n" + 
+				"        \"ph_hyperdiamond\"\r\n" + 
+				"      ]\r\n" + 
 				"    },\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade2\",\r\n" + 
-				"      \"BladeShowName\": \"TestBlade[Nano Technology]\",\r\n" + 
+				"      \"BladeShowName\": \"TestBlade[Nano Tech]\",\r\n" + 
 				"      \"BladeModel\": \"model/2\",\r\n" + 
 				"      \"BladeTexture\": \"texture/2\",\r\n" + 
 				"      \"BladeDamge\": 1024,\r\n" + 

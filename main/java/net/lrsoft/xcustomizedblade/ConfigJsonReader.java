@@ -19,12 +19,14 @@ import mods.flammpfeil.slashblade.SlashBlade;
 public class ConfigJsonReader {
 	public String path;
 	public JsonArray jsondata;
+	public boolean CustomRecipe;
 	public ConfigJsonReader(String inpath) {
 		this.path=inpath;
+		this.CustomRecipe=false;
 	}
 	public void itemInit() {
-		int i,sa,standby,duration,color;boolean iswithed;JsonArray Enchantment=null;
-		float bladedamage;String bladename,bladeModel,bladeTexture,showName;
+		int i,sa,standby,duration,color;boolean iswithed;JsonArray Enchantment=null,recipeItems=null;
+		float bladedamage;String bladename,bladeModel,bladeTexture,showName;String[] recipeName= new String[11];
 		for(i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
 			sa=temp.get("BladeSA").getAsInt();
@@ -42,12 +44,28 @@ public class ConfigJsonReader {
 			}catch(NullPointerException e) {
 				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t enchantment.");
 			}
-				
+			if(this.CustomRecipe==true) {
+				System.out.println("XCustomizedBlade Info:Using custom recipe");
+				try {
+					recipeItems=temp.get("BladeRecipe").getAsJsonArray();
+				}catch(NullPointerException e) {
+					System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t recipe.");
+					this.CustomRecipe=false;
+				}
+				for(int j=0;j<11;j++) {
+					try {
+						if(recipeItems.get(j).isJsonNull()==false)
+							recipeName[j]=recipeItems.get(j).getAsString();
+					}catch(NullPointerException e) {
+						continue;
+					}
+				}
+			}
 			if(bladename==null||bladeModel==null||bladeTexture==null) break;
 			ItemCustomBlade blade=new ItemCustomBlade(sa,standby,duration,color,
-					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment);
+					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,CustomRecipe,recipeName);
 			SlashBlade.InitEventBus.register(blade);
-			System.out.println(sa+" "+standby+" "+duration+" "+color+""+iswithed+" "+
+			System.out.println(sa+" "+standby+" "+duration+" "+color+" "+iswithed+" "+
 					bladedamage+" "+bladename+" "+bladeModel+" "+bladeTexture);
 		}
 		
@@ -58,6 +76,7 @@ public class ConfigJsonReader {
 		try {
 			JsonObject json=(JsonObject)jp.parse(new FileReader(path));
 			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
+			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
 			return 1;
 		}catch (JsonIOException e) {
             e.printStackTrace();

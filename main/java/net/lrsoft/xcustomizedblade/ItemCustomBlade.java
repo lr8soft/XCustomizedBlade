@@ -12,30 +12,34 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
 import mods.flammpfeil.slashblade.ItemSlashBlade;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
+import mods.flammpfeil.slashblade.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.enchantment.EnchantmentArrowDamage;
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.enchantment.EnchantmentDurability;
+import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.lrsoft.xcustomizedblade.SBMcEnchantment;
 public class ItemCustomBlade {
+	private String[] recipeItems;
 	private JsonArray Enchantment;
 	private int sa,standby,bladeduration,color;
-	private boolean iswitched;private float bladedamage;
+	private boolean iswitched,useCustomRecipe;private float bladedamage;
 	private String bladename,bladeModel,bladeTexture,showName;
-	public ItemCustomBlade(int sa,int standby,int duration,int color,boolean iswithed,float bladedamage,
-			String bladename,String showName,String bladeModel,String bladeTexture,JsonArray list) {
+	public ItemCustomBlade(int sa,int standby,int duration,int color,boolean iswithed,float bladedamage,String bladename,
+			String showName,String bladeModel,String bladeTexture,JsonArray list,boolean useCustomRecipe,String[] recipeItems) {
 		this.sa=sa;this.standby=standby;this.bladeduration=duration;this.iswitched=iswithed;
 		this.bladedamage=bladedamage;this.bladeModel=bladeModel;this.bladeTexture=bladeTexture;
 		this.bladename=bladename;this.color=color;this.showName=showName;this.Enchantment=list;
+		this.recipeItems=recipeItems;this.useCustomRecipe=useCustomRecipe;
 	}
 	 @SubscribeEvent
 	public void Init(InitEvent event) {
-		//String a=new String(sa+" "+standby+" "+bladeduration+" "+iswitched+" "+bladedamage+" "+bladename+" "+bladeModel+" "+bladeTexture);
-		//JOptionPane.showMessageDialog(null,a);
 	      ItemStack customblade = new ItemStack(SlashBlade.bladeNamed, 1, 0);  
 	      NBTTagCompound tag = new NBTTagCompound();
 	      customblade.setTagCompound(tag);
@@ -80,9 +84,44 @@ public class ItemCustomBlade {
 	    		}
 	    	  }
 	      }
+    	  ItemStack[] recipeNeed = new ItemStack[11];
+    	  if(this.useCustomRecipe==true) {
+        	  int j;
+        	  for(j=1;j<11;j++) {
+        		  String source=recipeItems[0];
+        		  if(source!=null) {
+        			 try {
+        				 if(j==1) {
+        					 recipeNeed[j]=new ItemStack(GameRegistry.findItem("flammpfeil.slashblade", recipeItems[j]),1);
+        				 }else {
+        					 System.out.println("XCustomizedBlade Info:"+recipeItems[j]+" in "+source);
+        					 recipeNeed[j]=new ItemStack(GameRegistry.findItem(source, recipeItems[j]));        					 
+        				 }
+        			 if(recipeNeed[j]==null) 
+        				 recipeNeed[j]=new ItemStack(GameRegistry.findBlock(source, recipeItems[j]));
+        			 }catch(NullPointerException e) {}
+        		  }
+        	  }
+        	  BladeRecipeInit(this,customblade,recipeNeed);
+    	  }
 	      GameRegistry.registerCustomItemStack(bladename, customblade);
 	      ItemSlashBladeNamed.NamedBlades.add(bladename);
 	      NamedBladeManager.registerBladeSoul(tag, bladename);
-	      
 	}
+	 public static void BladeRecipeInit(ItemCustomBlade bladeObject,ItemStack blade,ItemStack recipe[]) {
+		  SlashBlade.addRecipe(bladeObject.bladename, new RecipeAwakeBlade(blade, recipe[0],
+	    		  new Object[]{"ABC",
+	                           "DEF",
+	                           "GHI",
+	              Character.valueOf('A'),recipe[2],
+	              Character.valueOf('B'), recipe[3],
+	              Character.valueOf('C'), recipe[4],
+	              Character.valueOf('D'), recipe[5],
+	              Character.valueOf('E'), recipe[6],
+	              Character.valueOf('F'), recipe[7],
+	              Character.valueOf('G'), recipe[8],
+	              Character.valueOf('H'), recipe[9],
+	              Character.valueOf('I'), recipe[10],
+	    		  }));
+	 }
 }
