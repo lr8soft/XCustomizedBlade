@@ -20,7 +20,10 @@ public class CommonProxy {
 		 InfoShow msg=new InfoShow(jsonreader.readFromJson());
 		 msg.showInfo();
 		 jsonreader.itemInit();
+		 ItemXCustomizedTools.ItemInit();
 	 }
-	 public void init(FMLInitializationEvent event){}
+	 public void init(FMLInitializationEvent event){
+		 ItemXCustomizedTools.ItemRecipeInit();
+	 }
 	 public void postInit(FMLPostInitializationEvent event){}
 }

@@ -7,7 +7,7 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
-@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="0.8",dependencies="required-after:flammpfeil.slashblade")
+@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="0.84",dependencies="required-after:flammpfeil.slashblade")
 public class XCustomizedBlade {
 	@SidedProxy(clientSide = "net.lrsoft.xcustomizedblade.ClientProxy",serverSide = "net.lrsoft.xcustomizedblade.CommonProxy")
 	public static CommonProxy proxy; 
