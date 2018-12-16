@@ -57,6 +57,7 @@ public class ItemXCustomizedSTDTool extends Item{
 				this.addwindow=new EasyCreateBlade();
 				this.addwindow.setVisible(true);
 			}else {
+				addwindow.json.readFromJson();
 				addwindow.setVisible(true);
 			}
 			break;

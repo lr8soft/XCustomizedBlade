@@ -2,11 +2,13 @@ package net.lrsoft.xcustomizedblade;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonIOException;
 import com.google.gson.JsonObject;
@@ -17,6 +19,7 @@ import cpw.mods.fml.common.eventhandler.EventBus;
 import mods.flammpfeil.slashblade.SlashBlade;
 
 public class ConfigJsonReader {
+	private JsonObject json;
 	public String path;
 	public JsonArray jsondata;
 	public boolean CustomRecipe;
@@ -25,23 +28,30 @@ public class ConfigJsonReader {
 		this.path=inpath;
 		this.CustomRecipe=false;
 		this.datalen=0;
+		this.json=null;
 	}
 	public void itemInit() {
 		this.datalen=jsondata.size();
-		int i,sa,standby,duration,color;boolean iswithed;JsonArray Enchantment=null,recipeItems=null;
-		float bladedamage;String bladename,bladeModel,bladeTexture,showName;String[] recipeName= new String[11];
+		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null;
+		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;String[] recipeName= new String[11];
 		for(i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
-			sa=temp.get("BladeSA").getAsInt();
-			standby=temp.get("BladeStandBy").getAsInt();
-			duration=temp.get("BladeDuration").getAsInt();
-			color=temp.get("SwordColor").getAsInt();
-			iswithed=temp.get("BladeWitched").getAsBoolean();
-			bladedamage=temp.get("BladeDamge").getAsFloat();
-			bladename=temp.get("BladeName").getAsString();
-			showName=temp.get("BladeShowName").getAsString();
-			bladeModel=temp.get("BladeModel").getAsString();
-			bladeTexture=temp.get("BladeTexture").getAsString();
+			try {
+				bladename=temp.get("BladeName").getAsString();
+				showName=temp.get("BladeShowName").getAsString();
+				bladeModel=temp.get("BladeModel").getAsString();
+				bladeTexture=temp.get("BladeTexture").getAsString();
+			}catch(NullPointerException e) {
+				continue;
+			}
+			try {
+				sa=temp.get("BladeSA").getAsInt();
+				standby=temp.get("BladeStandBy").getAsInt();
+				duration=temp.get("BladeDuration").getAsInt();
+				color=temp.get("SwordColor").getAsInt();
+				iswithed=temp.get("BladeWitched").getAsBoolean();
+				bladedamage=temp.get("BladeDamge").getAsFloat();
+			}catch(NullPointerException e) {}
 			try {
 				Enchantment=temp.get("Enchantment").getAsJsonArray();
 			}catch(NullPointerException e) {
@@ -64,7 +74,7 @@ public class ConfigJsonReader {
 					}
 				}
 			}
-			if(bladename==null||bladeModel==null||bladeTexture==null) break;
+			if(bladename==null||bladeModel==null||bladeTexture==null||showName==null) continue;
 			ItemCustomBlade blade=new ItemCustomBlade(sa,standby,duration,color,
 					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,CustomRecipe,recipeName);
 			SlashBlade.InitEventBus.register(blade);
@@ -76,20 +86,31 @@ public class ConfigJsonReader {
 	public XCDJsonInfo[] GetInfo() {
 		XCDJsonInfo[] info = new XCDJsonInfo[jsondata.size()];
 		this.datalen=jsondata.size();
-		int i,sa,standby,duration,color;boolean iswithed;JsonArray Enchantment=null,recipeItems=null;
-		float bladedamage;String bladename,bladeModel,bladeTexture,showName;String[] recipeName= new String[11];
+		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null;
+		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;String[] recipeName= new String[11];
 		for(i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
-			sa=temp.get("BladeSA").getAsInt();
-			standby=temp.get("BladeStandBy").getAsInt();
-			duration=temp.get("BladeDuration").getAsInt();
-			color=temp.get("SwordColor").getAsInt();
-			iswithed=temp.get("BladeWitched").getAsBoolean();
-			bladedamage=temp.get("BladeDamge").getAsFloat();
-			bladename=temp.get("BladeName").getAsString();
-			showName=temp.get("BladeShowName").getAsString();
-			bladeModel=temp.get("BladeModel").getAsString();
-			bladeTexture=temp.get("BladeTexture").getAsString();
+			try {
+				bladename=temp.get("BladeName").getAsString();
+				showName=temp.get("BladeShowName").getAsString();
+				bladeModel=temp.get("BladeModel").getAsString();
+				bladeTexture=temp.get("BladeTexture").getAsString();
+			}catch(NullPointerException e) {
+				continue;
+			}
+			try {
+				sa=temp.get("BladeSA").getAsInt();
+				standby=temp.get("BladeStandBy").getAsInt();
+				duration=temp.get("BladeDuration").getAsInt();
+				color=temp.get("SwordColor").getAsInt();
+				iswithed=temp.get("BladeWitched").getAsBoolean();
+				bladedamage=temp.get("BladeDamge").getAsFloat();
+			}catch(NullPointerException e) {}
+			try {
+				Enchantment=temp.get("Enchantment").getAsJsonArray();
+			}catch(NullPointerException e) {
+				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t enchantment.");
+			}
 			try {
 				Enchantment=temp.get("Enchantment").getAsJsonArray();
 			}catch(NullPointerException e) {
@@ -122,7 +143,7 @@ public class ConfigJsonReader {
 		System.out.println("XCustomizedBlade_Config_Path:"+path);
 		JsonParser jp=new JsonParser();
 		try {
-			JsonObject json=(JsonObject)jp.parse(new FileReader(path));
+			json=(JsonObject)jp.parse(new FileReader(path));
 			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
 			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
 			return 1;
@@ -140,5 +161,112 @@ public class ConfigJsonReader {
 		int ret=readFromJson();
 		InfoShow mess=new InfoShow(ret);
 		mess.showInfo();
+	}
+	public void changeToJson(XCDJsonInfo info,int datalen) {
+		System.out.println("XCustomizedBlade Info:Try to replace the old blade->"+info.bladename);
+		for(int i=0;i<datalen;i++) {
+			JsonObject temp=jsondata.get(i).getAsJsonObject();
+			if(temp.get("BladeName").getAsString().equals(info.bladename)) {
+				temp.remove("BladeShowName");temp.addProperty("BladeShowName", info.showName);
+				temp.remove("BladeModel");temp.addProperty("BladeModel",info.bladeModel);
+				temp.remove("BladeTexture");temp.addProperty("BladeTexture",info.bladeTexture);
+				temp.remove("BladeDamge");temp.addProperty("BladeDamge",info.bladedamage);
+				temp.remove("BladeDuration");temp.addProperty("BladeDuration",info.bladeduration);
+				temp.remove("BladeWitched");temp.addProperty("BladeWitched",info.iswitched);
+				temp.remove("BladeStandBy");temp.addProperty("BladeStandBy",info.standby);
+				temp.remove("BladeSA");temp.addProperty("BladeSA", info.sa);
+				temp.remove("SwordColor");temp.addProperty("SwordColor",info.color);
+				//this.jsondata.add(temp);
+			//	this.json.add("XCustomizedBladeConfig", jsondata);
+				this.json.remove("XCustomizedBladeConfig");
+				this.json.add("XCustomizedBladeConfig", jsondata);
+				Gson out=new Gson();
+				try {
+					FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+					output.write(out.toJson(json).getBytes());
+					output.close();
+				} catch (FileNotFoundException e) {
+					System.out.println("XCustomizedBlade Error:"+e.getMessage());
+				} catch (IOException e) {
+					System.out.println("XCustomizedBlade Error:"+e.getMessage());
+				}
+			}
+		}
+		this.readFromJson();
+	}
+	public boolean isExisted(String name) {
+		System.out.println("Blade count:"+jsondata.size());
+		for(int i=0;i<jsondata.size();i++) {
+			JsonObject temp=jsondata.get(i).getAsJsonObject();
+			System.out.println(temp.get("BladeName").getAsString()+"~"+name);
+			if(name.equals(temp.get("BladeName").getAsString())) {
+				System.out.println("XCustomizedBlade Warning:"+temp.get("BladeName").getAsString()+"~"+name+"is existed.");
+				return true;
+			}
+		}
+		return false;
+	}
+	public int addToJson(XCDJsonInfo info) {
+		if(info.bladename==null||info.showName==null||this.json==null) return 0;
+		boolean isexisted=isExisted(info.bladename);
+		System.out.println("XCustomizedBlade:Is blade existed?"+isexisted);
+		if(isexisted==true) {
+			 changeToJson(info,jsondata.size());
+			 return -2;
+		}else {
+			JsonObject temp=new JsonObject();
+			temp.addProperty("BladeName", info.bladename);
+			temp.addProperty("BladeShowName", info.showName);
+			temp.addProperty("BladeModel",info.bladeModel);
+			temp.addProperty("BladeTexture",info.bladeTexture);
+			temp.addProperty("BladeDamge",info.bladedamage);
+			temp.addProperty("BladeDuration",info.bladeduration);
+			temp.addProperty("BladeWitched",info.iswitched);
+			temp.addProperty("BladeStandBy",info.standby);
+			temp.addProperty("BladeSA", info.sa);
+			temp.addProperty("SwordColor",info.color);
+			this.jsondata.add(temp);
+			this.json.add("XCustomizedBladeConfig", jsondata);
+			Gson out=new Gson();
+			try {
+				FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+				output.write(out.toJson(json).getBytes());
+				output.close();
+			} catch (FileNotFoundException e) {
+				return -1;
+			} catch (IOException e) {
+				return -1;
+			}
+			this.readFromJson();
+			return 1;
+		}
+	}
+	public int deleteToJson(String name) {
+		for(int i=0;i<datalen;i++) {
+			JsonObject temp=jsondata.get(i).getAsJsonObject();
+			if(temp.get("BladeName").getAsString().equals(name)) {
+				temp.remove("BladeShowName");temp.remove("BladeModel");
+				temp.remove("BladeTexture");temp.remove("BladeDamge");
+				temp.remove("BladeDuration");temp.remove("BladeWitched");
+				temp.remove("BladeStandBy");temp.remove("BladeSA");
+				temp.remove("SwordColor");temp.remove("BladeName");
+				this.json.remove("XCustomizedBladeConfig");
+				this.json.add("XCustomizedBladeConfig", jsondata);
+				Gson out=new Gson();
+				try {
+					FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+					output.write(out.toJson(json).getBytes());
+					output.close();
+				} catch (FileNotFoundException e) {
+					System.out.println("XCustomizedBlade Error:"+e.getMessage());
+					return -1;
+				} catch (IOException e) {
+					System.out.println("XCustomizedBlade Error:"+e.getMessage());
+					return -1;
+				}
+				return 1;
+			}
+		}
+		return 0;
 	}
 }

@@ -12,7 +12,7 @@ import mods.flammpfeil.slashblade.SlashBlade;
 
 public class CommonProxy {
 	private String lrsoft;
-	public CommonProxy() {lrsoft="Garbagge code(((";}
+	public CommonProxy() {lrsoft="Garbagge code.jpeg";}
 	 public void preInit(FMLPreInitializationEvent event){
 		 ModInit minit=new ModInit();
 		 minit.checkInit();

@@ -6,7 +6,7 @@ public class XCDJsonInfo {
 	public String[] recipeItems;
 	public JsonArray Enchantment;
 	public int sa,standby,bladeduration,color;
-	public boolean iswitched,useCustomRecipe;private float bladedamage;
+	public boolean iswitched,useCustomRecipe;public float bladedamage;
 	public String bladename,bladeModel,bladeTexture,showName;
 	public XCDJsonInfo(int sa,int standby,int duration,int color,boolean iswithed,float bladedamage,String bladename,
 			String showName,String bladeModel,String bladeTexture,JsonArray list,boolean useCustomRecipe,String[] recipeItems) {
