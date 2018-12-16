@@ -22,15 +22,7 @@ public class ItemXCustomizedSTDTool extends Item{
 		this.setUnlocalizedName("xcb."+toolname);
 		this.setMaxStackSize(1);
 		this.setCreativeTab(SlashBlade.tab);
-		switch(this.toolname) {
-		case "AddNewBlade":
-		
-			break;
-		case "ChangeTheBlade":
-
-			break;	
-		
-		}
+		this.setTextureName("xcustomizedblade:XCDTools");
 		GameRegistry.registerItem(this, toolname);
 		
 	}
@@ -53,13 +45,8 @@ public class ItemXCustomizedSTDTool extends Item{
 	public ItemStack onItemRightClick(ItemStack itemStack, World world, EntityPlayer player) {
 		switch(this.toolname) {
 		case "AddNewBlade":
-			if(this.addwindow==null) {
-				this.addwindow=new EasyCreateBlade();
-				this.addwindow.setVisible(true);
-			}else {
-				addwindow.json.readFromJson();
-				addwindow.setVisible(true);
-			}
+			addwindow=new EasyCreateBlade();
+			addwindow.setVisible(true);
 			break;
 		case "ChangeTheBlade":
 

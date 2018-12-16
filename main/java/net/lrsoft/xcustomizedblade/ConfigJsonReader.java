@@ -19,6 +19,7 @@ import cpw.mods.fml.common.eventhandler.EventBus;
 import mods.flammpfeil.slashblade.SlashBlade;
 
 public class ConfigJsonReader {
+	public boolean addToolRecipe;
 	private JsonObject json;
 	public String path;
 	public JsonArray jsondata;
@@ -140,12 +141,17 @@ public class ConfigJsonReader {
 		
 	}
 	public int readFromJson() {
+		double version;
 		System.out.println("XCustomizedBlade_Config_Path:"+path);
 		JsonParser jp=new JsonParser();
 		try {
 			json=(JsonObject)jp.parse(new FileReader(path));
 			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
 			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
+			version=json.get("XCustomizedBladeVER").getAsDouble();
+			if(version>=0.9) {
+				addToolRecipe=json.get("ToolRecipe").getAsBoolean();
+			}
 			return 1;
 		}catch (JsonIOException e) {
             e.printStackTrace();
@@ -166,30 +172,34 @@ public class ConfigJsonReader {
 		System.out.println("XCustomizedBlade Info:Try to replace the old blade->"+info.bladename);
 		for(int i=0;i<datalen;i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
-			if(temp.get("BladeName").getAsString().equals(info.bladename)) {
-				temp.remove("BladeShowName");temp.addProperty("BladeShowName", info.showName);
-				temp.remove("BladeModel");temp.addProperty("BladeModel",info.bladeModel);
-				temp.remove("BladeTexture");temp.addProperty("BladeTexture",info.bladeTexture);
-				temp.remove("BladeDamge");temp.addProperty("BladeDamge",info.bladedamage);
-				temp.remove("BladeDuration");temp.addProperty("BladeDuration",info.bladeduration);
-				temp.remove("BladeWitched");temp.addProperty("BladeWitched",info.iswitched);
-				temp.remove("BladeStandBy");temp.addProperty("BladeStandBy",info.standby);
-				temp.remove("BladeSA");temp.addProperty("BladeSA", info.sa);
-				temp.remove("SwordColor");temp.addProperty("SwordColor",info.color);
-				//this.jsondata.add(temp);
-			//	this.json.add("XCustomizedBladeConfig", jsondata);
-				this.json.remove("XCustomizedBladeConfig");
-				this.json.add("XCustomizedBladeConfig", jsondata);
-				Gson out=new Gson();
-				try {
-					FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
-					output.write(out.toJson(json).getBytes());
-					output.close();
-				} catch (FileNotFoundException e) {
-					System.out.println("XCustomizedBlade Error:"+e.getMessage());
-				} catch (IOException e) {
-					System.out.println("XCustomizedBlade Error:"+e.getMessage());
+			try {
+				if(temp.get("BladeName").getAsString().equals(info.bladename)) {
+					temp.remove("BladeShowName");temp.addProperty("BladeShowName", info.showName);
+					temp.remove("BladeModel");temp.addProperty("BladeModel",info.bladeModel);
+					temp.remove("BladeTexture");temp.addProperty("BladeTexture",info.bladeTexture);
+					temp.remove("BladeDamge");temp.addProperty("BladeDamge",info.bladedamage);
+					temp.remove("BladeDuration");temp.addProperty("BladeDuration",info.bladeduration);
+					temp.remove("BladeWitched");temp.addProperty("BladeWitched",info.iswitched);
+					temp.remove("BladeStandBy");temp.addProperty("BladeStandBy",info.standby);
+					temp.remove("BladeSA");temp.addProperty("BladeSA", info.sa);
+					temp.remove("SwordColor");temp.addProperty("SwordColor",info.color);
+					//this.jsondata.add(temp);
+				//	this.json.add("XCustomizedBladeConfig", jsondata);
+					this.json.remove("XCustomizedBladeConfig");
+					this.json.add("XCustomizedBladeConfig", jsondata);
+					Gson out=new Gson();
+					try {
+						FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+						output.write(out.toJson(json).getBytes());
+						output.close();
+					} catch (FileNotFoundException e) {
+						System.out.println("XCustomizedBlade Error:"+e.getMessage());
+					} catch (IOException e) {
+						System.out.println("XCustomizedBlade Error:"+e.getMessage());
+					}
 				}
+			}catch(NullPointerException e) {
+				continue;
 			}
 		}
 		this.readFromJson();
@@ -198,10 +208,13 @@ public class ConfigJsonReader {
 		System.out.println("Blade count:"+jsondata.size());
 		for(int i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
-			System.out.println(temp.get("BladeName").getAsString()+"~"+name);
-			if(name.equals(temp.get("BladeName").getAsString())) {
-				System.out.println("XCustomizedBlade Warning:"+temp.get("BladeName").getAsString()+"~"+name+"is existed.");
-				return true;
+			try {
+				if(name.equals(temp.get("BladeName").getAsString())) {
+					System.out.println("XCustomizedBlade Warning:"+temp.get("BladeName").getAsString()+"~"+name+"is existed.");
+					return true;
+				}
+			}catch(NullPointerException e) {
+				continue;
 			}
 		}
 		return false;

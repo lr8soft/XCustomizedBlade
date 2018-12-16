@@ -12,18 +12,22 @@ import mods.flammpfeil.slashblade.SlashBlade;
 
 public class CommonProxy {
 	private String lrsoft;
+	private  ConfigJsonReader jsonreader;
 	public CommonProxy() {lrsoft="Garbagge code.jpeg";}
 	 public void preInit(FMLPreInitializationEvent event){
 		 ModInit minit=new ModInit();
 		 minit.checkInit();
-		 ConfigJsonReader jsonreader=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+		 jsonreader=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
 		 InfoShow msg=new InfoShow(jsonreader.readFromJson());
 		 msg.showInfo();
 		 jsonreader.itemInit();
 		 ItemXCustomizedTools.ItemInit();
 	 }
 	 public void init(FMLInitializationEvent event){
-		 ItemXCustomizedTools.ItemRecipeInit();
+		 if(jsonreader.addToolRecipe==true) {
+			 ItemXCustomizedTools.ItemRecipeInit();
+		 }
+		
 	 }
 	 public void postInit(FMLPostInitializationEvent event){}
 }

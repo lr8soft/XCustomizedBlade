@@ -11,46 +11,49 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 0.8,\r\n" + 
+				"  \r\n" + 
+				"  \"XCustomizedBladeVER\": 0.9,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
+				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
+				"      \"BladeRecipe\": [ \"phtc2\", \"SlashBlade.bladeWood\", \"normalingot\", \"normalingot\", \"normalingot\", \"energydust\", \"energydust\", \"energydust\", \"ph_hyperdiamond\", \"ph_hyperdiamond\", \"ph_hyperdiamond\" ],\r\n" + 
 				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
-				"      \"BladeDamge\": 10.0,\r\n" + 
+				"      \"BladeDamge\": 12.0,\r\n" + 
 				"      \"BladeDuration\": 200,\r\n" + 
 				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
 				"      \"BladeSA\": 1,\r\n" + 
-				"      \"SwordColor\": 16711935, //Decimal Color Code\r\n" + 
-				"      \"BladeRecipe\": [\r\n" + 
-				"        \"phtc2\", //Enter modid here.\r\n" + 
-				"        \"SlashBlade.bladeWood\",\r\n" + 
-				"        \"normalingot\",\r\n" + 
-				"        \"normalingot\",\r\n" + 
-				"        \"normalingot\",\r\n" + 
-				"        \"energydust\",\r\n" + 
-				"        \"energydust\",\r\n" + 
-				"        \"energydust\",\r\n" + 
-				"        \"ph_hyperdiamond\",\r\n" + 
-				"        \"ph_hyperdiamond\",\r\n" + 
-				"        \"ph_hyperdiamond\"\r\n" + 
-				"      ]\r\n" + 
+				"      \"SwordColor\": 16711935\r\n" + 
 				"    },\r\n" + 
+				"    {},//空数据\r\n" + 
 				"    {\r\n" + 
-				"      \"BladeName\": \"testblade2\",\r\n" + 
-				"      \"BladeShowName\": \"TestBlade[Nano Tech]\",\r\n" + 
+				"      \"BladeName\": \"TestBlade[Technology Revolution]\",\r\n" + 
+				"      \"Enchantment\": [ \"power\", 12, \"sharpness\", 12 ],\r\n" + 
+				"      \"BladeShowName\": \"测之刃【技术革新】\",\r\n" + 
 				"      \"BladeModel\": \"model/2\",\r\n" + 
 				"      \"BladeTexture\": \"texture/2\",\r\n" + 
-				"      \"BladeDamge\": 1024,\r\n" + 
-				"      \"BladeDuration\": 2000,\r\n" + 
-				"      \"BladeWitched\": true,\r\n" + 
+				"      \"BladeDamge\": 1024.0,\r\n" + 
+				"      \"BladeDuration\": 1200,\r\n" + 
+				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
 				"      \"BladeSA\": 1,\r\n" + 
-				"      \"SwordColor\": 16744192,\r\n" + 
-				"      \"Enchantment\": [ \"power\", 10, \"unbreaking\", 10 ]\r\n" + 
+				"      \"SwordColor\": 16744192\r\n" + 
+				"    },\r\n" + 
+				"    {\r\n" + 
+				"      \"BladeName\": \"test\",\r\n" + 
+				"      \"BladeShowName\": \"testblade\",\r\n" + 
+				"      \"BladeModel\": \"model/1\",\r\n" + 
+				"      \"BladeTexture\": \"texture/1\",\r\n" + 
+				"      \"BladeDamge\": 18.0,\r\n" + 
+				"      \"BladeDuration\": 200,\r\n" + 
+				"      \"BladeWitched\": true,\r\n" + 
+				"      \"BladeStandBy\": 2,\r\n" + 
+				"      \"BladeSA\": 1,\r\n" + 
+				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";
