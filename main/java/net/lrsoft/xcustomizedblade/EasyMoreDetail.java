@@ -21,7 +21,8 @@ public class EasyMoreDetail extends JFrame{
 	public JComboBox<String> standbyList,saList;
 	private JLabel sal,sbl;
 	String[] SBinfo= {"右手","左手","后背"};
-	String[] SAinfo= {"次元斩","幻影刃","平突","幻影刃","波刀龙胆"};
+	String[] SAinfo= {"次元斩","幻影刃","平突","幻影刃","波刀龙胆","円刃","急袭幻影剑-衰破","终焉樱","MaximumBet"};
+					 // 0     1    2     3     4     5       6        7       8
 	public EasyMoreDetail(EasyCreateBlade callback) {
 		x=y=50;delta=100;
 		this.setSize(400, 300);

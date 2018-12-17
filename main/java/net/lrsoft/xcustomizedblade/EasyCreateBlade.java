@@ -82,7 +82,7 @@ public class EasyCreateBlade extends JFrame{
 				
 			});
 			menu.add(list);
-			JLabel mInfo=new JLabel("注意！重进游戏后设置生效！");mInfo.setBounds(x, y+20*h+2*bh-25, 450, 20);
+			JLabel mInfo=new JLabel("注意！重进游戏后设置生效！");mInfo.setBounds(x, y+20*h+2*bh-25, 450, 20);menu.add(mInfo);
 			decinfo=new LinkLabel("点击这里，更多十进制颜色代码","http://www.360doc.com/content/14/0216/21/6954561_353057367.shtml");
 			decinfo.setBounds(x, y+20*h+2*bh, 450, 20);menu.add(decinfo);
 			add=new JButton("添加新拔刀");add.setBounds(x, y+20*h, bw, bh);

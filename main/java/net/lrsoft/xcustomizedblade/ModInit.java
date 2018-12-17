@@ -12,7 +12,7 @@ public class ModInit {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
 				"  \r\n" + 
-				"  \"XCustomizedBladeVER\": 0.9,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.0,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
@@ -40,19 +40,19 @@ public class ModInit {
 				"      \"BladeDuration\": 1200,\r\n" + 
 				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 1,\r\n" + 
+				"      \"BladeSA\": 8,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
 				"    },\r\n" + 
 				"    {\r\n" + 
-				"      \"BladeName\": \"test\",\r\n" + 
-				"      \"BladeShowName\": \"testblade\",\r\n" + 
+				"      \"BladeName\": \"testblade2\",\r\n" + 
+				"      \"BladeShowName\": \"TestBlade[Second]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
 				"      \"BladeDamge\": 18.0,\r\n" + 
 				"      \"BladeDuration\": 200,\r\n" + 
 				"      \"BladeWitched\": true,\r\n" + 
 				"      \"BladeStandBy\": 2,\r\n" + 
-				"      \"BladeSA\": 1,\r\n" + 
+				"      \"BladeSA\": 7,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
