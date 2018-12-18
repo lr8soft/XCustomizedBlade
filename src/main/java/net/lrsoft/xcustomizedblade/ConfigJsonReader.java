@@ -15,12 +15,10 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.JsonSyntaxException;
 
-import cpw.mods.fml.common.eventhandler.EventBus;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.lrsoft.xcustomizedblade.XCBItem.ItemCustomBlade;
 
 public class ConfigJsonReader {
-	public boolean addToolRecipe;
 	private JsonObject json;
 	public String path;
 	public JsonArray jsondata;
@@ -150,9 +148,6 @@ public class ConfigJsonReader {
 			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
 			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
 			version=json.get("XCustomizedBladeVER").getAsDouble();
-			if(version>=0.9) {
-				addToolRecipe=json.get("ToolRecipe").getAsBoolean();
-			}
 			return 1;
 		}catch (JsonIOException e) {
             e.printStackTrace();
@@ -184,8 +179,6 @@ public class ConfigJsonReader {
 					temp.remove("BladeStandBy");temp.addProperty("BladeStandBy",info.standby);
 					temp.remove("BladeSA");temp.addProperty("BladeSA", info.sa);
 					temp.remove("SwordColor");temp.addProperty("SwordColor",info.color);
-					//this.jsondata.add(temp);
-				//	this.json.add("XCustomizedBladeConfig", jsondata);
 					this.json.remove("XCustomizedBladeConfig");
 					this.json.add("XCustomizedBladeConfig", jsondata);
 					Gson out=new Gson();

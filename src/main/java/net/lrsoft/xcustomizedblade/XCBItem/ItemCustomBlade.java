@@ -8,23 +8,26 @@ import javax.swing.JOptionPane;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.registry.GameRegistry;
-import mods.flammpfeil.slashblade.ItemSlashBlade;
 import mods.flammpfeil.slashblade.ItemSlashBladeNamed;
 import mods.flammpfeil.slashblade.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
+import mods.flammpfeil.slashblade.tileentity.DummyTileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraftforge.client.ForgeHooksClient;
+import net.minecraftforge.common.ForgeHooks;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraft.enchantment.EnchantmentArrowDamage;
 import net.minecraft.enchantment.EnchantmentDamage;
 import net.minecraft.enchantment.EnchantmentDurability;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
-import net.lrsoft.xcustomizedblade.SBMcEnchantment;
+import net.minecraft.enchantment.Enchantment;
 public class ItemCustomBlade {
 	private String[] recipeItems;
 	private JsonArray Enchantment;
@@ -46,13 +49,13 @@ public class ItemCustomBlade {
 	      customblade.setStackDisplayName(showName);
 	      ItemSlashBladeNamed.CurrentItemName.set(tag, bladename);
 	      ItemSlashBladeNamed.CustomMaxDamage.set(tag, bladeduration);
-	      ItemXCustomizedSTDBlade.setBaseAttackModifier(tag,  bladedamage);
+	      ItemSlashBladeNamed.setBaseAttackModifier(tag, bladedamage);
 	      ItemSlashBladeNamed.IsDefaultBewitched.set(tag, Boolean.valueOf(iswitched));
-	      ItemXCustomizedSTDBlade.TextureName.set(tag, bladeTexture);
-	      ItemXCustomizedSTDBlade.ModelName.set(tag, bladeModel);
-	      ItemXCustomizedSTDBlade.SpecialAttackType.set(tag, sa);
-	      ItemXCustomizedSTDBlade.StandbyRenderType.set(tag, standby);
-	      ItemSlashBlade.SummonedSwordColor.set(tag,color);
+	      ItemSlashBladeNamed.TextureName.set(tag, bladeTexture);
+	      ItemSlashBladeNamed.ModelName.set(tag, bladeModel);
+	      ItemSlashBladeNamed.SpecialAttackType.set(tag, sa);
+	      ItemSlashBladeNamed.StandbyRenderType.set(tag, standby);
+	      ItemSlashBladeNamed.SummonedSwordColor.set(tag,color);
 	      if(this.Enchantment!=null&&this.Enchantment.size()%2==0) {
 	    	  int i,strengthen=0;String temp;
 	    	  for(i=0;i<this.Enchantment.size();i+=2) {
@@ -61,21 +64,21 @@ public class ItemCustomBlade {
 		    		 strengthen=this.Enchantment.get(i+1).getAsInt();
 		    		 switch(temp) {
 		    		 	case "power":
-		    		 		customblade.addEnchantment(SBMcEnchantment.power,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.POWER,strengthen); break;
 		    		 	case "unbreaking":
-		    		 		customblade.addEnchantment(SBMcEnchantment.unbreaking,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.UNBREAKING,strengthen); break;
 		    		 	case "looting":
-		    		 		customblade.addEnchantment(SBMcEnchantment.looting,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.LOOTING,strengthen); break;
 		    		 	case "sharpness":
-		    		 		customblade.addEnchantment(SBMcEnchantment.sharpness,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.SHARPNESS,strengthen); break;
 		    		 	case "infinity":
-		    		 		customblade.addEnchantment(SBMcEnchantment.infinity,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.INFINITY,strengthen); break;
 		    		 	case "thorns":
-		    		 		customblade.addEnchantment(SBMcEnchantment.thorns,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.THORNS,strengthen); break;
 		    		 	case "knockback":
-		    		 		customblade.addEnchantment(SBMcEnchantment.knockback,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.KNOCKBACK,strengthen); break;
 		    		 	case "baneOfArthropods":
-		    		 		customblade.addEnchantment(SBMcEnchantment.baneOfArthropods,strengthen); break;
+		    		 		customblade.addEnchantment(Enchantments.BANE_OF_ARTHROPODS,strengthen); break;
 		    		 	default:
 		    		 		System.out.println("XCustomizedBlade Error:Unknown Enchantment name "+temp);
 		    		 }
@@ -86,13 +89,13 @@ public class ItemCustomBlade {
 	      }
     	  ItemStack[] recipeNeed = new ItemStack[11];
     	  if(this.useCustomRecipe==true) {
-        	  int j;
+        /*	  int j;
         	  for(j=1;j<11;j++) {
         		  String source=recipeItems[0];
         		  if(source!=null) {
         			 try {
         				 if(j==1) {
-        					 recipeNeed[j]=new ItemStack(GameRegistry.findItem("flammpfeil.slashblade", recipeItems[j]),1);
+        					 recipeNeed[j]=new ItemStack(SlashBlade.findItem("flammpfeil.slashblade", recipeItems[j]),1);
         				 }else {
         					 System.out.println("XCustomizedBlade Info:"+recipeItems[j]+" in "+source);
         					 recipeNeed[j]=new ItemStack(GameRegistry.findItem(source, recipeItems[j]));        					 
@@ -102,14 +105,14 @@ public class ItemCustomBlade {
         			 }catch(NullPointerException e) {}
         		  }
         	  }
-        	  BladeRecipeInit(this,customblade,recipeNeed);
+        	  BladeRecipeInit(this,customblade,recipeNeed);*/
     	  }
-	      GameRegistry.registerCustomItemStack(bladename, customblade);
+    	  SlashBlade.registerCustomItemStack(bladename, customblade);
 	      ItemSlashBladeNamed.NamedBlades.add(bladename);
 	      NamedBladeManager.registerBladeSoul(tag, bladename);
 	}
 	 public static void BladeRecipeInit(ItemCustomBlade bladeObject,ItemStack blade,ItemStack recipe[]) {
-		  SlashBlade.addRecipe(bladeObject.bladename, new RecipeAwakeBlade(blade, recipe[0],
+	/*	  SlashBlade.addRecipe(bladeObject.bladename, new RecipeAwakeBlade(blade, recipe[0],
 	    		  new Object[]{"ABC",
 	                           "DEF",
 	                           "GHI",
@@ -122,6 +125,6 @@ public class ItemCustomBlade {
 	              Character.valueOf('G'), recipe[8],
 	              Character.valueOf('H'), recipe[9],
 	              Character.valueOf('I'), recipe[10],
-	    		  }));
+	    		  }));*/
 	 }
 }

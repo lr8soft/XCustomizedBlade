@@ -11,10 +11,8 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \r\n" + 
-				"  \"XCustomizedBladeVER\": 1.20,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.00,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
-				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
@@ -24,12 +22,12 @@ public class ModInit {
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
 				"      \"BladeDamge\": 12.0,\r\n" + 
 				"      \"BladeDuration\": 200,\r\n" + 
-				"      \"BladeWitched\": false,\r\n" + 
-				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 1,\r\n" + 
+				"      \"BladeWitched\": true,\r\n" + 
+				"      \"BladeStandBy\": 0,\r\n" + 
+				"      \"BladeSA\": 6,\r\n" + 
 				"      \"SwordColor\": 16711935\r\n" + 
 				"    },\r\n" + 
-				"    {},//空数据\r\n" + 
+				"    {},\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"TestBlade[Technology Revolution]\",\r\n" + 
 				"      \"Enchantment\": [ \"power\", 12, \"sharpness\", 12 ],\r\n" + 

@@ -107,21 +107,21 @@ public class EasyNBTEditor extends JFrame{
 		
 	}
 	public boolean getBoolean(String tag) {
-		return blade.stackTagCompound.getBoolean(tag);
+		return blade.getTagCompound().getBoolean(tag);
 	}
 	public String getString(String tag) {
-		return blade.stackTagCompound.getString(tag);
+		return blade.getTagCompound().getString(tag);
 	}
 	public int getInt(String tag) {
-		return blade.stackTagCompound.getInteger(tag);
+		return blade.getTagCompound().getInteger(tag);
 	}
 	public void setBoolean(String tag,boolean info) {
-		blade.stackTagCompound.setBoolean(tag, info);
+		blade.getTagCompound().setBoolean(tag, info);
 	}
 	public void setString(String tag,String info) {
-		blade.stackTagCompound.setString(tag, info);
+		blade.getTagCompound().setString(tag, info);
 	}
 	public void setInt(String tag,int info) {
-		blade.stackTagCompound.setInteger(tag, info);
+		blade.getTagCompound().setInteger(tag, info);
 	}
 }

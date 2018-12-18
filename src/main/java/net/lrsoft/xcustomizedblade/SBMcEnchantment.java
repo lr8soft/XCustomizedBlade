@@ -17,12 +17,15 @@ import net.minecraft.enchantment.EnchantmentThorns;
 import net.minecraft.enchantment.EnchantmentUntouching;
 import net.minecraft.enchantment.EnchantmentWaterWorker;
 import net.minecraft.enchantment.EnumEnchantmentType;
+import net.minecraft.inventory.EntityEquipmentSlot;
 
 public class SBMcEnchantment extends Enchantment{
-	private String faq="SB develop environment,,,AWSL.java";
-	protected SBMcEnchantment(int p_i1926_1_, int p_i1926_2_, EnumEnchantmentType p_i1926_3_) {
-		super(p_i1926_1_, p_i1926_2_, p_i1926_3_);
+	protected SBMcEnchantment(Rarity rarityIn, EnumEnchantmentType typeIn, EntityEquipmentSlot[] slots) {
+		super(rarityIn, typeIn, slots);
+		// TODO 自动生成的构造函数存根
 	}
+
+	private String faq="SB develop environment,,,AWSL.java";
 	
 /*	public static final Enchantment protection = new EnchantmentProtection(0, 10, 0);
     public static final Enchantment fireProtection = new EnchantmentProtection(1, 5, 1);
