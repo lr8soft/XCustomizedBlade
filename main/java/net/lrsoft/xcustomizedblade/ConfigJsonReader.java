@@ -18,19 +18,25 @@ import com.google.gson.JsonSyntaxException;
 import cpw.mods.fml.common.eventhandler.EventBus;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.lrsoft.xcustomizedblade.XCBItem.ItemCustomBlade;
+import net.lrsoft.xcustomizedblade.XCBNetwork.XCBConfigSync;
+import net.minecraft.client.Minecraft;
+import net.minecraft.server.MinecraftServer;
+import net.minecraftforge.common.MinecraftForge;
 
 public class ConfigJsonReader {
 	public boolean addToolRecipe;
-	private JsonObject json;
+	public JsonObject json;private JsonObject serverdata;
 	public String path;
 	public JsonArray jsondata;
-	public boolean CustomRecipe;
+	public boolean CustomRecipe,isServer;
 	public int datalen;
-	public ConfigJsonReader(String inpath) {
+	public ConfigJsonReader(String inpath,boolean isserver) {
+		this.isServer=isserver;
 		this.path=inpath;
 		this.CustomRecipe=false;
 		this.datalen=0;
 		this.json=null;
+		this.serverdata=null;
 	}
 	public void itemInit() {
 		this.datalen=jsondata.size();
@@ -147,12 +153,32 @@ public class ConfigJsonReader {
 		JsonParser jp=new JsonParser();
 		try {
 			json=(JsonObject)jp.parse(new FileReader(path));
-			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
-			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
 			version=json.get("XCustomizedBladeVER").getAsDouble();
 			if(version>=0.9) {
 				addToolRecipe=json.get("ToolRecipe").getAsBoolean();
 			}
+			if(version>=1.3){
+				try {
+					serverdata=json.get("ServerInfo").getAsJsonObject();
+					String hostname;int serverport;
+					hostname=serverdata.get("ServerHostName").getAsString();
+					serverport=serverdata.get("ServerPort").getAsInt();
+					System.out.println("XCustomizedBlade:Start to sync to server "+hostname+":"+serverport);
+					if(serverdata.get("SyncConfig").getAsBoolean()==false) {
+						System.out.println("XCustomizedBlade:Won't sync to server->from config");
+					}else {
+						XCBConfigSync udpsync=null;
+						udpsync=new XCBConfigSync(json.get("XCustomizedBladeConfig").getAsJsonArray(),
+								hostname,serverport,this.isServer);
+						udpsync.start();
+					}
+				}catch(Exception e) {
+					System.out.println("XCustomizedBlade:No server info!");
+				}
+
+			}
+			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
+			CustomRecipe=json.get("CustomizedRecipe").getAsBoolean();
 			return 1;
 		}catch (JsonIOException e) {
             e.printStackTrace();
@@ -283,4 +309,5 @@ public class ConfigJsonReader {
 		}
 		return 0;
 	}
+
 }

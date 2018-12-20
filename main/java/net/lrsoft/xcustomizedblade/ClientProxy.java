@@ -3,11 +3,12 @@ package net.lrsoft.xcustomizedblade;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import net.lrsoft.xcustomizedblade.XCBItem.ItemXCustomizedTools;
 
 public class ClientProxy extends CommonProxy{
 	@Override
     public void preInit(FMLPreInitializationEvent event){
-		this.isServerd=false;
+		super.isServerd=false;
         super.preInit(event);
     }
     @Override
