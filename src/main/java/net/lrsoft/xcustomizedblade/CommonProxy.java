@@ -11,15 +11,14 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class CommonProxy {
-	protected boolean isClient;
+	protected boolean isServer=true;
 	private String lrsoft;
 	private  ConfigJsonReader jsonreader;
 	public CommonProxy() {lrsoft="Garbagge code.jpeg";}
 	 public void preInit(FMLPreInitializationEvent event){
-		 this.isClient=false;
 		 ModInit minit=new ModInit();
 		 minit.checkInit();
-		 jsonreader=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+		 jsonreader=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json",this.isServer);
 		 InfoShow msg=new InfoShow(jsonreader.readFromJson());
 		 msg.showInfo();
 		 jsonreader.itemInit();

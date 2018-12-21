@@ -29,7 +29,7 @@ public class XCBEventLoader extends CommandBase{
 	public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
 		System.out.println(args);
 		if (args.length > 1){
-	           throw new WrongUsageException("XCustomizedBlade:Unknown command");
+	           throw new WrongUsageException("Unknown command!");
 	    }else{
 	           EntityPlayerMP player = CommandBase.getCommandSenderAsPlayer(sender);
 	           switch(args[0]) {
@@ -43,11 +43,11 @@ public class XCBEventLoader extends CommandBase{
 	    					EasyNBTEditor editWindow=new EasyNBTEditor(player.inventory.getStackInSlot(0));
 	    					editWindow.setVisible(true);
 	    				}catch(Exception e) {
-	    					throw new WrongUsageException("XCustomizedBlade:SlashBlade must be placed in the first of inventory!");
+	    					throw new WrongUsageException("SlashBlade must be placed in the first of inventory!");
 	    				}
 	           			break;
 	           		default:
-	           			throw new WrongUsageException("XCustomizedBlade:Unknown command");
+	           			throw new WrongUsageException("Unknown command!");
 	           } 
 	    }
 		

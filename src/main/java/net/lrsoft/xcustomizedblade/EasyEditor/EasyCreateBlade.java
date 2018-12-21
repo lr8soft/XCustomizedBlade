@@ -32,7 +32,7 @@ public class EasyCreateBlade extends JFrame{
 	public EasyCreateBlade() {
 		sa=standby=0;iswitched=false;duration=200;damage=18;
 		x=y=60;w=120;h=15;tw=300;th=20;bw=120;bh=45;bi=30;
-		json=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+		json=new ConfigJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json",false);
 		if(json.readFromJson()==0) {
 			JOptionPane.showMessageDialog(null,"XCustomizedBlade:Can\'t read from config!");
 			return;

@@ -11,20 +11,25 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.00,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.30,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
+				"  \"ToolRecipe\": true,\r\n" + 
+				"  \"ServerInfo\": {\r\n" + 
+				"    \"ServerPort\": 2333,\r\n" + 
+				"    \"ServerHostName\": \"127.0.0.1\",\r\n" + 
+				"    \"SyncConfig\": true\r\n" + 
+				"  },\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"BladeRecipe\": [ \"phtc2\", \"SlashBlade.bladeWood\", \"normalingot\", \"normalingot\", \"normalingot\", \"energydust\", \"energydust\", \"energydust\", \"ph_hyperdiamond\", \"ph_hyperdiamond\", \"ph_hyperdiamond\" ],\r\n" + 
 				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
 				"      \"BladeDamge\": 12.0,\r\n" + 
 				"      \"BladeDuration\": 200,\r\n" + 
-				"      \"BladeWitched\": true,\r\n" + 
-				"      \"BladeStandBy\": 0,\r\n" + 
-				"      \"BladeSA\": 6,\r\n" + 
+				"      \"BladeWitched\": false,\r\n" + 
+				"      \"BladeStandBy\": 1,\r\n" + 
+				"      \"BladeSA\": 1,\r\n" + 
 				"      \"SwordColor\": 16711935\r\n" + 
 				"    },\r\n" + 
 				"    {},\r\n" + 
