@@ -18,7 +18,8 @@ import com.google.gson.JsonSyntaxException;
 import cpw.mods.fml.common.eventhandler.EventBus;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.lrsoft.xcustomizedblade.XCBItem.ItemCustomBlade;
-import net.lrsoft.xcustomizedblade.XCBNetwork.XCBConfigSync;
+import net.lrsoft.xcustomizedblade.XCBNetwork.XCBConfigClientSync;
+import net.lrsoft.xcustomizedblade.XCBNetwork.XCBConfigServerSync;
 import net.minecraft.client.Minecraft;
 import net.minecraft.server.MinecraftServer;
 import net.minecraftforge.common.MinecraftForge;
@@ -167,10 +168,19 @@ public class ConfigJsonReader {
 					if(serverdata.get("SyncConfig").getAsBoolean()==false) {
 						System.out.println("XCustomizedBlade:Won't sync to server->from config");
 					}else {
-						XCBConfigSync udpsync=null;
+						/*XCBConfigSync udpsync=null;
 						udpsync=new XCBConfigSync(json.get("XCustomizedBladeConfig").getAsJsonArray(),
 								hostname,serverport,this.isServer);
-						udpsync.start();
+						udpsync.start();*/
+						if(this.isServer) {
+							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
+									json.get("XCustomizedBladeConfig").getAsJsonArray(),serverport);
+							tcpServer.start();
+						}else {
+							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json.get("XCustomizedBladeConfig").getAsJsonArray(),
+									hostname,serverport);
+							tcpClient.ConfigStartSync();
+						}
 					}
 				}catch(Exception e) {
 					System.out.println("XCustomizedBlade:No server info!");
