@@ -11,10 +11,14 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \r\n" + 
-				"  \"XCustomizedBladeVER\": 1.35,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.39,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
+				"  \"ServerInfo\": {\r\n" + 
+				"    \"ServerPort\": 2333,\r\n" + 
+				"    \"ServerHostName\": \"127.0.0.1\",\r\n" + 
+				"    \"SyncConfig\": true\r\n" + 
+				"  },\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
@@ -29,7 +33,7 @@ public class ModInit {
 				"      \"BladeSA\": 1,\r\n" + 
 				"      \"SwordColor\": 16711935\r\n" + 
 				"    },\r\n" + 
-				"    {},//空数据\r\n" + 
+				"    {},\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"TestBlade[Technology Revolution]\",\r\n" + 
 				"      \"Enchantment\": [ \"power\", 12, \"sharpness\", 12 ],\r\n" + 

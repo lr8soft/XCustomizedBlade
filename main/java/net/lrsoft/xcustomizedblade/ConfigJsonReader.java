@@ -168,16 +168,12 @@ public class ConfigJsonReader {
 					if(serverdata.get("SyncConfig").getAsBoolean()==false) {
 						System.out.println("XCustomizedBlade:Won't sync to server->from config");
 					}else {
-						/*XCBConfigSync udpsync=null;
-						udpsync=new XCBConfigSync(json.get("XCustomizedBladeConfig").getAsJsonArray(),
-								hostname,serverport,this.isServer);
-						udpsync.start();*/
 						if(this.isServer) {
 							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
 									json.get("XCustomizedBladeConfig").getAsJsonArray(),serverport);
 							tcpServer.start();
 						}else {
-							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json.get("XCustomizedBladeConfig").getAsJsonArray(),
+							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,json.get("XCustomizedBladeConfig").getAsJsonArray(),
 									hostname,serverport);
 							tcpClient.ConfigStartSync();
 						}
