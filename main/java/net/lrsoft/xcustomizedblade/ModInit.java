@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import net.lrsoft.xcustomizedblade.InfoShow;
 public class ModInit {
@@ -71,8 +72,11 @@ public class ModInit {
 			try {
 				System.out.println("XCustomizedBlade:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
-				out.write(this.STDJsonConfig.getBytes());
-				out.close();
+				 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
+				 outwriter.write(this.STDJsonConfig);
+				 outwriter.flush();
+				 outwriter.close();
+				 out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
