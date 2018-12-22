@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 
 import net.lrsoft.xcustomizedblade.InfoShow;
 public class ModInit {
@@ -11,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.30,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.31,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"ServerInfo\": {\r\n" + 
