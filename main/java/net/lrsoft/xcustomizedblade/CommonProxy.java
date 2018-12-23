@@ -12,11 +12,13 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.lrsoft.xcustomizedblade.XCBItem.ItemXCustomizedTools;
 import net.lrsoft.xcustomizedblade.XCBNetwork.EasyXCBEvent;
+import net.lrsoft.xcustomizedblade.XCBSpeicalAttack.SAJsonReader;
 
 public class CommonProxy {
 	protected boolean isServerd=true;
 	private String lrsoft;
 	private  ConfigJsonReader jsonreader;
+	private SAJsonReader sareader;
 	public CommonProxy() {lrsoft="Garbagge code.jpeg";}
 	 public void preInit(FMLPreInitializationEvent event){
 		 ModInit minit=new ModInit();
@@ -26,6 +28,8 @@ public class CommonProxy {
 		 msg.showInfo();
 		 jsonreader.itemInit();
 		 ItemXCustomizedTools.ItemInit();
+		 //BladeInit finished
+		 sareader=new SAJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
 	 }
 	 public void init(FMLInitializationEvent event){
 		 if(jsonreader.addToolRecipe==true) {

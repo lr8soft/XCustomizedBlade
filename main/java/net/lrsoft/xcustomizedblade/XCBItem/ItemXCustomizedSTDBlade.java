@@ -41,11 +41,11 @@ public class ItemXCustomizedSTDBlade extends ItemSlashBlade {
             	loc = new ResourceLocation(InfoShow.getNowPath()+"\\"+modelName+".png");
                 modelMap.put(modelName,loc);
             }else{
-                loc = modelMap.get(modelName);
+                loc = (ResourceLocation) modelMap.get(modelName);
             }
             return loc;
         }
-        return ((ItemSlashBlade)par1ItemStack.getItem()).getModel();
+        return  ((ItemSlashBlade)par1ItemStack.getItem()).getModel();
     }
 
 }

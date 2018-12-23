@@ -12,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.39,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.40,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"ServerInfo\": {\r\n" + 
@@ -60,6 +60,16 @@ public class ModInit {
 				"      \"BladeSA\": 7,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
+				"  ],\r\n" + 
+				"  \"XCustomizedSA\": [\r\n" + 
+				"    {\r\n" + 
+				"      \"SAName\": \"SpecialAttack_Test0\",\r\n" + 
+				"      \"SANumber\": 2333,\r\n" + 
+				"      \"SACost\": 20,\r\n" + 
+				"      \"SAInfo\": [\"PS\",\"SE\",\"SP\"],\r\n" + 
+				"      \"SAStep\": [ 5, 3, 1 ],\r\n" + 
+				"      \"SACount\": 2\r\n" + 
+				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";
 	}
@@ -72,10 +82,11 @@ public class ModInit {
 			try {
 				System.out.println("XCustomizedBlade:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
-				 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
+		/*		 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
 				 outwriter.write(this.STDJsonConfig);
 				 outwriter.flush();
-				 outwriter.close();
+				 outwriter.close();*/
+				 out.write(this.STDJsonConfig.getBytes());
 				 out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

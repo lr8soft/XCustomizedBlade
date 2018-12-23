@@ -3,9 +3,11 @@ package net.lrsoft.xcustomizedblade.XCBSpeicalAttack;
 import java.util.List;
 
 import mods.flammpfeil.slashblade.ItemSlashBlade;
+import mods.flammpfeil.slashblade.ability.StylishRankManager;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.specialattack.SpecialAttackBase;
 import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -14,52 +16,56 @@ import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class XCustomizedSpecialAttack extends SpecialAttackBase {
-	private String speicalAttackName;
-	private float distance;
-	private boolean useArrow,useDrive,useSakuraEnd;
-	private int arrow;private double arrowdamage;
-	public XCustomizedSpecialAttack(String name,float dis,boolean useArrow,int arrow,double arrowdamage,
-			boolean useDrive,boolean useSakuraEnd) {
-		this.speicalAttackName=name;this.arrow=arrow;
-		this.useArrow=useArrow;this.useDrive=useDrive;this.useSakuraEnd=useSakuraEnd;
-		this.arrowdamage=arrowdamage;this.distance=dis;
+	private XCustomizedSAInfo SAInfo;
+	public XCustomizedSpecialAttack(XCustomizedSAInfo info) {
+		this.SAInfo=info;
 	}
-	@Override
-	public void doSpacialAttack(ItemStack blade, EntityPlayer player) {
+
+    @Override
+    public void doSpacialAttack(ItemStack stack, EntityPlayer player) {
         World world = player.worldObj;
-        NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(blade);
-        int entity=ItemSlashBlade.TargetEntityId.get(tag);
-        Entity tmp = world.getEntityByID(entity),target=null;
+        NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(stack);
         if(!world.isRemote){
-  			target=tmp;
-  				if(target == null){
-	                target = getEntityToWatch(player);
-  				}
-        		if(tmp.getDistanceToEntity(player)<distance) {
-                	if(useArrow==true) {
-                		for(int i=0;i<arrow;i++) {
-                			EntityWitherSword attArrow = new EntityWitherSword(world, player, (float)arrowdamage,90.0f);
-                			attArrow.setInterval((int) (1+i*0.1));;
-                			attArrow.setColor(0x00FFFF);
-                			attArrow.setLifeTime(50);
-                			attArrow.setTargetEntityId(target.getEntityId());
-                			world.spawnEntityInWorld(attArrow);
-                		}
-                	}
-                	if(useDrive==true) {
-                		
-                	}
-        		}
+            if(!ItemSlashBlade.ProudSoul.tryAdd(tag,SAInfo.SAcost,false)){
+                ItemSlashBlade.damageItem(stack, 10, player);
+            }
+            ItemSlashBlade blade = (ItemSlashBlade)stack.getItem();
+            Entity target = null;
+            int entityId = ItemSlashBlade.TargetEntityId.get(tag);
+            if(entityId != 0){
+                Entity tmp = world.getEntityByID(entityId);
+                if(tmp != null){
+                    if(tmp.getDistanceToEntity(player) < 50.0f)
+                        target = tmp;
+                }
+            }
+            if(target == null){
+                target = getEntityToWatch(player);
+            }
+            if(target != null){
+                  ItemSlashBlade.setComboSequence(tag, ItemSlashBlade.ComboSequence.SlashDim);
+                  int cost =120;
+                  ItemSlashBlade.damageItem(stack, cost, player);
+                  StylishRankManager.setNextAttackType(player, StylishRankManager.AttackTypes.PhantomSword);
+                  blade.attackTargetEntity(stack, target, player, true);
+                  player.onCriticalHit(target);
+                  target.motionX = 0;target.motionY = 0;target.motionZ = 0;
+                  if(target instanceof EntityLivingBase){
+                      blade.setDaunting((EntityLivingBase)target);
+                      ((EntityLivingBase) target).hurtTime = 5;
+                      ((EntityLivingBase) target).hurtResistantTime = 5;
+                  }
+                  this.SAInfo.workToEntity(world, player, (EntityLivingBase)target);
+          }
         }
-	}
+    }
 
 	@Override
 	public String toString() {
-		return this.speicalAttackName;
+		return this.SAInfo.SAName;
 	}
-	
+	////From SlashBlade,by author flammpfeil
     private Entity getEntityToWatch(EntityPlayer player){
-    	////From SlashBlade,by author flammpfeil
         World world = player.worldObj;
         Entity target = null;
         for(int dist = 2; dist < 20; dist+=2){
