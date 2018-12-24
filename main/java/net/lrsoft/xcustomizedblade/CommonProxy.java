@@ -30,6 +30,7 @@ public class CommonProxy {
 		 ItemXCustomizedTools.ItemInit();
 		 //BladeInit finished
 		 sareader=new SAJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+		 sareader.SAInit();
 	 }
 	 public void init(FMLInitializationEvent event){
 		 if(jsonreader.addToolRecipe==true) {

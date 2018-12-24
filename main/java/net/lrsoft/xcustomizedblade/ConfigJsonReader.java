@@ -238,7 +238,6 @@ public class ConfigJsonReader {
 		this.readFromJson();
 	}
 	public boolean isExisted(String name) {
-		System.out.println("Blade count:"+jsondata.size());
 		for(int i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
 			try {

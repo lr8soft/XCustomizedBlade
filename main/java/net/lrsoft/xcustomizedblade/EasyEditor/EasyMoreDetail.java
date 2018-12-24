@@ -13,6 +13,8 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import net.lrsoft.xcustomizedblade.XCBUtil.XCBSelectBox;
+
 public class EasyMoreDetail extends JFrame{
 	public int standby,sa;
 	int x,y,z,delta;
@@ -59,7 +61,7 @@ public class EasyMoreDetail extends JFrame{
 		});
 		menu.add(submit);
 		sbl=new JLabel("选择持刀姿势:");sbl.setBounds(x+150, y-30, 100, 20);menu.add(sbl);
-		standbyList=new JComboBox<>(new infoBox(SBinfo));standbyList.setBounds(x+150, y, 100, 40);
+		standbyList=new JComboBox<>(new XCBSelectBox(SBinfo));standbyList.setBounds(x+150, y, 100, 40);
 		standbyList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -69,7 +71,7 @@ public class EasyMoreDetail extends JFrame{
 		standbyList.setEnabled(false);
 		menu.add(standbyList);
 		sal=new JLabel("选择特殊攻击SA:");sal.setBounds(x+150, y+70, 100, 20);menu.add(sal);
-		saList=new JComboBox<>(new infoBox(SAinfo));saList.setBounds(x+150, y+100, 100, 40);
+		saList=new JComboBox<>(new XCBSelectBox(SAinfo));saList.setBounds(x+150, y+100, 100, 40);
 		saList.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -77,33 +79,5 @@ public class EasyMoreDetail extends JFrame{
 			}
 		});
 		menu.add(saList);
-	}
-}
-class infoBox extends AbstractListModel<String> implements ComboBoxModel<String>{
-	String selecteditem=null;
-	String[] info=null;
-	public infoBox(String[] in) {
-		this.info=in;
-	}
-	@Override
-	public String getElementAt(int arg0) {
-		return info[arg0];
-	}
-
-	@Override
-	public int getSize() {
-		return info.length;
-	}
-
-	@Override
-	public Object getSelectedItem() {
-		// TODO 自动生成的方法存根
-		return selecteditem;
-	}
-
-	@Override
-	public void setSelectedItem(Object arg0) {
-		selecteditem=(String)arg0;
-		
 	}
 }

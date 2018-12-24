@@ -18,6 +18,8 @@ import javax.swing.event.ListSelectionListener;
 import net.lrsoft.xcustomizedblade.ConfigJsonReader;
 import net.lrsoft.xcustomizedblade.InfoShow;
 import net.lrsoft.xcustomizedblade.XCDJsonInfo;
+import net.lrsoft.xcustomizedblade.XCBUtil.XCBHyperLink;
+import net.lrsoft.xcustomizedblade.XCBUtil.XCBListInfo;
 
 public class EasyCreateBlade extends JFrame{
 	public int sa,standby,duration,damage;public boolean iswitched;
@@ -28,7 +30,7 @@ public class EasyCreateBlade extends JFrame{
 	JButton add,save,delete,detail;
 	JTextField name,showname,path,texture,color;
 	JList<String> list;
-	LinkLabel decinfo;
+	XCBHyperLink decinfo;
 	public EasyCreateBlade() {
 		sa=standby=0;iswitched=false;duration=200;damage=18;
 		x=y=60;w=120;h=15;tw=300;th=20;bw=120;bh=45;bi=30;
@@ -61,7 +63,7 @@ public class EasyCreateBlade extends JFrame{
 			texture=new JTextField();texture.setBounds(x+w, y+12*h, tw, th);menu.add(texture);
 			color=new JTextField();color.setBounds(x+w, y+16*h, tw, th);menu.add(color);
 			
-			list=new JList<>(new showList(listname));
+			list=new JList<>(new XCBListInfo(listname));
 			list.setBounds(x+w+w/2+tw, y, 200, 280);
 			list.addListSelectionListener(new ListSelectionListener() {
 				@Override
@@ -87,7 +89,7 @@ public class EasyCreateBlade extends JFrame{
 			});
 			menu.add(list);
 			JLabel mInfo=new JLabel("注意！重进游戏后设置生效！");mInfo.setBounds(x, y+20*h+2*bh-25, 450, 20);menu.add(mInfo);
-			decinfo=new LinkLabel("点击这里，更多十进制颜色代码","http://www.360doc.com/content/14/0216/21/6954561_353057367.shtml");
+			decinfo=new XCBHyperLink("点击这里，更多十进制颜色代码","http://www.360doc.com/content/14/0216/21/6954561_353057367.shtml");
 			decinfo.setBounds(x, y+20*h+2*bh, 450, 20);menu.add(decinfo);
 			add=new JButton("添加新拔刀");add.setBounds(x, y+20*h, bw, bh);
 			add.addActionListener(new ActionListener() {
@@ -171,70 +173,4 @@ public class EasyCreateBlade extends JFrame{
 
 		}
 	}
-}
-class showList extends AbstractListModel<String>{
-	private String[] info=null;
-	public showList(String[] input) {
-		this.info=input;
-	}
-	public String getElementAt(int arg0) {
-		if(arg0<info.length)
-			return info[arg0++];
-		else
-			return null;
-	}
-	public int getSize() {
-		return info.length;
-	}
-	
-}
-class LinkLabel extends JLabel {
-	/*Code from CSDN,author _cha1R
-	 https://blog.csdn.net/tanjiayqq/article/details/17062275
-	 */
-    private static final long serialVersionUID = 1L;
-    private String text;
-    private URL link = null;
-    private Color preColor = null;
-    public LinkLabel(String vText, String vLink) {
-        super("<html>" + vText + "</html>");
-        this.text = vText;
-        try {
-            if (!vLink.startsWith("http://"))
-                vLink = "http://" + vLink;
-            this.link = new URL(vLink);
-        } catch (MalformedURLException err) {
-            err.printStackTrace();
-        }
-        this.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseExited(MouseEvent e) {
-                LinkLabel.this.setCursor(Cursor
-                        .getPredefinedCursor(Cursor.DEFAULT_CURSOR));
-                if (preColor != null)
-                    LinkLabel.this.setForeground(preColor);
-                LinkLabel.this.setText("<html>" + text + "</html>");
-            }
-
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                LinkLabel.this.setCursor(Cursor
-                        .getPredefinedCursor(Cursor.HAND_CURSOR));
-                preColor = LinkLabel.this.getForeground();
-                LinkLabel.this.setForeground(Color.BLUE);
-                LinkLabel.this.setText("<html><u>" + text + "</u></html>");
-            }
-
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                try {
-                    Desktop.getDesktop().browse(link.toURI());
-                } catch (IOException err) {
-                    err.printStackTrace();
-                } catch (URISyntaxException err) {
-                    err.printStackTrace();
-                }
-            }
-        });
-    }
 }

@@ -2,6 +2,7 @@ package net.lrsoft.xcustomizedblade.XCBNetwork;
 
 import net.lrsoft.xcustomizedblade.XCustomizedBlade;
 import net.lrsoft.xcustomizedblade.EasyEditor.EasyCreateBlade;
+import net.lrsoft.xcustomizedblade.EasyEditor.EasyCreateSpecialAttack;
 import net.lrsoft.xcustomizedblade.EasyEditor.EasyNBTEditor;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -41,8 +42,9 @@ public class EasyXCBEvent extends CommandBase{
 	    					throw new WrongUsageException("SlashBlade must be placed in the first of inventory!");
 	    				}
 	           			break;
-	           		case "-info":
-	           	    	
+	           		case "-sa":
+	           			EasyCreateSpecialAttack saWindow=new EasyCreateSpecialAttack();
+	           			saWindow.setVisible(true);
 	           	    	break;
 	           		default:
 	           			throw new WrongUsageException("Invalid input.");

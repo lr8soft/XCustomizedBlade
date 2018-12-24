@@ -59,15 +59,28 @@ public class ModInit {
 				"      \"BladeStandBy\": 2,\r\n" + 
 				"      \"BladeSA\": 7,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
+				"    },\r\n" + 
+				"    {\r\n" + 
+				"      \"BladeName\": \"satest\",\r\n" + 
+				"      \"BladeShowName\": \"SA测试拔刀剑\",\r\n" + 
+				"      \"BladeModel\": \"model/1\",\r\n" + 
+				"      \"BladeTexture\": \"texture/2\",\r\n" + 
+				"      \"BladeDamge\": 18.0,\r\n" + 
+				"      \"BladeDuration\": 200,\r\n" + 
+				"      \"BladeWitched\": true,\r\n" + 
+				"      \"BladeStandBy\": 0,\r\n" + 
+				"      \"BladeSA\": 2333,\r\n" + 
+				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
 				"  ],\r\n" + 
 				"  \"XCustomizedSA\": [\r\n" + 
 				"    {\r\n" + 
-				"      \"SAName\": \"SpecialAttack_Test0\",\r\n" + 
+				"      \"SAName\": \"SATest0\",\r\n" + 
 				"      \"SANumber\": 2333,\r\n" + 
 				"      \"SACost\": 20,\r\n" + 
-				"      \"SAInfo\": [\"PS\",\"SE\",\"SP\"],\r\n" + 
-				"      \"SAStep\": [ 5, 3, 1 ],\r\n" + 
+				"      \"SAInfo\": [ \"PS\", \"SE\", \"SP\" ],\r\n" + 
+				"      \"StepDamage\": [ 1, 5, 2 ],\r\n" + 
+				"      \"SAStep\": [ 100, 3, 1 ],\r\n" + 
 				"      \"SACount\": 2\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
