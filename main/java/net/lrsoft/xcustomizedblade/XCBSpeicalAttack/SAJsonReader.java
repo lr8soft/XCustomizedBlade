@@ -15,6 +15,7 @@ import com.google.gson.JsonSyntaxException;
 
 import mods.flammpfeil.slashblade.SlashBlade;
 import net.lrsoft.xcustomizedblade.InfoShow;
+import net.lrsoft.xcustomizedblade.XCBUtil.XCBToJsonArray;
 
 public class SAJsonReader {
 	public JsonObject jsoninfo;
@@ -117,11 +118,10 @@ public class SAJsonReader {
 	public int addToJson(String name,int num,int cost,String[] step,int[] count,int[] damage) {
 		JsonObject temp=new JsonObject();
 		temp.addProperty("SAName", name);temp.addProperty("SANumber", num);
-		JsonArray test=new JsonArray();
-		temp.add("SAInfo", test);
-		for(int i=0;i<step.length;i++) {
-			temp.get("SAInfo").getAsJsonArray();
-		}
+		temp.addProperty("SACost", cost);
+		temp.add("SAInfo", XCBToJsonArray.StringToJsonArray(step));
+		temp.add("StepDamage", XCBToJsonArray.IntToJsonArray(damage));
+		temp.add("SAStep", XCBToJsonArray.IntToJsonArray(count));
 		temp.addProperty("SACount", step.length);
 		this.jsondata.add(temp);
 		this.jsoninfo.add("XCustomizedSA", jsondata);

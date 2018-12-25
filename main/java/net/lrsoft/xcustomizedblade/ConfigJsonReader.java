@@ -170,10 +170,14 @@ public class ConfigJsonReader {
 					}else {
 						if(this.isServer) {
 							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
-									json.get("XCustomizedBladeConfig").getAsJsonArray(),serverport);
+									json.get("XCustomizedBladeConfig").getAsJsonArray(),
+									json.get("XCustomizedSA").getAsJsonArray()
+									,serverport);
 							tcpServer.start();
 						}else {
-							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,json.get("XCustomizedBladeConfig").getAsJsonArray(),
+							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,
+									json.get("XCustomizedBladeConfig").getAsJsonArray(),
+									json.get("XCustomizedSA").getAsJsonArray(),
 									hostname,serverport);
 							tcpClient.ConfigStartSync();
 						}

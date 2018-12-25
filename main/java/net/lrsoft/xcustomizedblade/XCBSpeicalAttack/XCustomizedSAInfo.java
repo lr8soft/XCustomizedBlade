@@ -1,7 +1,9 @@
 package net.lrsoft.xcustomizedblade.XCBSpeicalAttack;
 
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import mods.flammpfeil.slashblade.EntityDirectAttackDummy;
 import mods.flammpfeil.slashblade.ItemSlashBlade;
+import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
@@ -9,6 +11,8 @@ import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
 
 public class XCustomizedSAInfo {
@@ -38,7 +42,15 @@ public class XCustomizedSAInfo {
 					break;
 				case "LN":
 					target.setHealth(target.getHealth()-this.StepDamage[i]);
-					workThunder(world,target);
+					workThunder(world,target,this.SACount[i]);
+					break;
+				case "MB":
+					target.setHealth(target.getHealth()-this.StepDamage[i]);
+					workMaximumBet(world,player,this.SACount[i]);
+					break;
+				case "SP":
+					target.setHealth(target.getHealth()-this.StepDamage[i]);
+					workSpear(world,player,this.SACount[i]);
 					break;
 			}
 		}
@@ -68,8 +80,33 @@ public class XCustomizedSAInfo {
 	        }
 		}
 	}
-	public void workThunder(World world,EntityLivingBase target) {
-		world.addWeatherEffect(new EntityLightningBolt(world,target.posX,target.posY,target.posZ));
+	public void workThunder(World world,EntityLivingBase target,int runtime) {
+		for(int i=0;i<runtime;i++) {
+			world.addWeatherEffect(new EntityLightningBolt(world,target.posX,target.posY,target.posZ));
+		}
+	}
+	public void workMaximumBet(World world,EntityPlayer player,int runtime) {
+		for(int i=0;i<runtime;i++) {
+		    EntityMaximumBetManager entityDA = new EntityMaximumBetManager(world, player);
+	        if (entityDA != null) {
+	            world.spawnEntityInWorld(entityDA);
+	        }
+		}
+	}
+	public void workSpear(World world,EntityPlayer player,int runtime) {
+		double playerDist = 3.5;
+		for(int i=0;i<runtime;i++) {
+			  if(!player.onGround)
+				  playerDist *= 0.35f;
+		      player.motionX = -Math.sin(Math.toRadians(player.rotationYaw)) * playerDist;
+		      player.motionZ =  Math.cos(Math.toRadians(player.rotationYaw)) * playerDist;
+	          player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(),10,0,true));
+	          EntityDirectAttackDummy entityDA = new EntityDirectAttackDummy(world, player, false);
+	          entityDA.setLifeTime(7);
+	          if (entityDA != null) {
+	        	  world.spawnEntityInWorld(entityDA);
+	          }
+		}
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {

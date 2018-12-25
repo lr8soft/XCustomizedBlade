@@ -15,6 +15,7 @@ import net.lrsoft.xcustomizedblade.XCBSpeicalAttack.SAJsonReader;
 import net.lrsoft.xcustomizedblade.XCBUtil.XCBListInfo;
 import net.lrsoft.xcustomizedblade.XCBUtil.XCBSelectBox;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -28,15 +29,16 @@ public class EasySAEditor extends JFrame {
 	JList<String> steplist;
 	private JTextField count;
 	private JTextField damage;
-	Vector actioncontents=new Vector();
-	Vector actioncount=new Vector();
-	Vector actiondamage=new Vector();
+	public Vector actioncontents=new Vector();
+	public Vector actioncount=new Vector();
+	public Vector actiondamage=new Vector();
 	private EasyCreateSpecialAttack inputclass;
 	private JTextField name;
 	private JTextField cost;
 	private JTextField idField;
 	public EasySAEditor(EasyCreateSpecialAttack tempclass) {
-		String[] sainfo= {"幻影剑(一根)","终焉樱","闪电！"};
+		String[] sainfo= {"幻影剑(一根)","终焉樱","闪电","MaximumBet(快速两斩)","平突"};
+		//                   0       1    2       3              4
 		inputclass=tempclass;
 		setResizable(false);
 		SAInfo=new SAJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
@@ -45,31 +47,47 @@ public class EasySAEditor extends JFrame {
 		this.setVisible(true);
 		getContentPane().setLayout(null);
 		this.setTitle("XCustomizedSA Editor");
-		JList actionList = new JList(actioncontents);//<>(new XCBListInfo(steplistN))
+		
+		DefaultListModel dlm=new DefaultListModel();
+		JList actionList = new JList();//<>(new XCBListInfo(steplistN))
 		actionList.setBounds(32, 27, 360, 239);
 		getContentPane().add(actionList);
 		
 		JComboBox<String> selectAction = new JComboBox<>(new XCBSelectBox(sainfo));
 		selectAction.setBounds(92, 418, 102, 27);
 		getContentPane().add(selectAction);
-		
+		EasySAEditor classoutside=this;
+	
 		JButton addAction = new JButton("添加动作");
+		JList iactionList=actionList;
 		addAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(count.getText()!=null&&damage.getText()!=null) {
 					switch(selectAction.getSelectedIndex()) {
 						case 0:
 							actioncontents.add("PS");
+							dlm.addElement("幻影剑 "+count.getText()+"次，单次威力"+damage.getText());
 							break;
 						case 1:
 							actioncontents.add("SE");
+							dlm.addElement("终焉樱 "+count.getText()+"次，总威力"+damage.getText());
 							break;
 						case 2:
 							actioncontents.add("LN");
+							dlm.addElement("雷电"+count.getText()+"次，总威力"+damage.getText());
+							break;
+						case 3:
+							actioncontents.add("MB");
+							dlm.addElement("快速两连斩"+count.getText()+"次，总威力"+damage.getText());
+							break;
+						case 4:
+							actioncontents.add("SP");
+							dlm.addElement("平突"+count.getText()+"次，总威力"+damage.getText());
 							break;
 					}
 					actioncount.add(Integer.valueOf(count.getText()));
 					actiondamage.add(Integer.valueOf(damage.getText()));
+					actionList.setModel(dlm);
 				}
 			}
 		});
@@ -106,7 +124,7 @@ public class EasySAEditor extends JFrame {
 		JButton submit = new JButton("提交");
 		submit.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			/*	String[] scontext=new String[actioncount.toArray().length];
+				String[] scontext=new String[actioncount.toArray().length];
 				int[] scount=new int[actioncount.toArray().length];
 				int[] sdamage=new int[actioncount.toArray().length];
 				for(int a=0;a<actioncount.toArray().length;a++) {
@@ -114,12 +132,15 @@ public class EasySAEditor extends JFrame {
 					sdamage[a]=(int)actiondamage.get(a);
 					scontext[a]=String.valueOf(actioncontents.get(a));
 				}
-				SAInfo.addToJson(name.getText(),Integer.valueOf(idField.getText()),
+				int ret=SAInfo.addToJson(name.getText(),Integer.valueOf(idField.getText()),
 						Integer.valueOf(cost.getText()), scontext,scount, sdamage);
-				JOptionPane.showMessageDialog(null, "已添加到配置中！");*/
+				if(ret==1)
+					JOptionPane.showMessageDialog(null, "已添加到配置中！");
+				else
+					JOptionPane.showMessageDialog(null, "添加失败！");
 			}
 		});
-		submit.setBounds(407, 27, 148, 57);
+		submit.setBounds(407, 27, 148, 47);
 		getContentPane().add(submit);
 		EasySAEditor ctemp=this;
 		JButton cancel = new JButton("取消");
@@ -133,7 +154,7 @@ public class EasySAEditor extends JFrame {
 				} catch (Throwable e1) {}
 			}
 		});
-		cancel.setBounds(407, 99, 148, 62);
+		cancel.setBounds(407, 89, 148, 47);
 		getContentPane().add(cancel);
 		
 		JLabel label_3 = new JLabel("名称");
@@ -163,4 +184,5 @@ public class EasySAEditor extends JFrame {
 		getContentPane().add(idField);
 		idField.setColumns(10);
 	}
+
 }
