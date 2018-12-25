@@ -12,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.31,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.40,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"ServerInfo\": {\r\n" + 
@@ -22,7 +22,7 @@ public class ModInit {
 				"  },\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
-				"      \"BladeName\": \"testblade\",\r\n" + 
+				"      \"BladeName\": \"testblade\",\r\n" +  
 				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
@@ -58,6 +58,29 @@ public class ModInit {
 				"      \"BladeStandBy\": 2,\r\n" + 
 				"      \"BladeSA\": 7,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
+				"    },\r\n" + 
+				"    {\r\n" + 
+				"      \"BladeName\": \"satest\",\r\n" + 
+				"      \"BladeShowName\": \"SA测试拔刀剑\",\r\n" + 
+				"      \"BladeModel\": \"model/1\",\r\n" + 
+				"      \"BladeTexture\": \"texture/2\",\r\n" + 
+				"      \"BladeDamge\": 18.0,\r\n" + 
+				"      \"BladeDuration\": 200,\r\n" + 
+				"      \"BladeWitched\": true,\r\n" + 
+				"      \"BladeStandBy\": 0,\r\n" + 
+				"      \"BladeSA\": 2333,\r\n" + 
+				"      \"SwordColor\": 16744192\r\n" + 
+				"    }\r\n" + 
+				"  ],\r\n" + 
+				"  \"XCustomizedSA\": [\r\n" + 
+				"    {\r\n" + 
+				"      \"SAName\": \"SATest0\",\r\n" + 
+				"      \"SANumber\": 2333,\r\n" + 
+				"      \"SACost\": 20,\r\n" + 
+				"      \"SAInfo\": [ \"PS\", \"SE\", \"SP\" ],\r\n" + 
+				"      \"StepDamage\": [ 1, 5, 2 ],\r\n" + 
+				"      \"SAStep\": [ 100, 3, 1 ],\r\n" + 
+				"      \"SACount\": 2\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";
@@ -71,10 +94,11 @@ public class ModInit {
 			try {
 				System.out.println("XCustomizedBlade:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
-				 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
+		/*		 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
 				 outwriter.write(this.STDJsonConfig);
 				 outwriter.flush();
-				 outwriter.close();
+				 outwriter.close();*/
+				 out.write(this.STDJsonConfig.getBytes());
 				 out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();

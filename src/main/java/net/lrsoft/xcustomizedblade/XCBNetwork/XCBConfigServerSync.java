@@ -23,13 +23,14 @@ import net.lrsoft.xcustomizedblade.ConfigJsonReader;
 import net.lrsoft.xcustomizedblade.InfoShow;
 
 public class XCBConfigServerSync extends Thread{
-	private JsonArray jsonarray;
+	private JsonArray jsonarray,saarray;
 	private OutputStreamWriter output;
 	private ServerSocket server;
 	private Socket socket;
 	private int port;
-	public XCBConfigServerSync(JsonArray input,int port){
-		this.jsonarray=input;
+	public XCBConfigServerSync(JsonArray inputblade,JsonArray inputsa,int port){
+		this.jsonarray=inputblade;
+		this.saarray=inputsa;
 		this.port=port;
 		try {
 			server=new ServerSocket(port);
@@ -44,10 +45,13 @@ public class XCBConfigServerSync extends Thread{
 		System.out.println("XCB SERVER:Waiting for client.");
 		while(true) {
 			String jsonInfo=jsonarray.toString();
+			String saInfo=saarray.toString();
 			try {
 				socket=server.accept();
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"),true);
-				out.println(jsonInfo);
+				out.print(jsonInfo);
+				out.print(">>>>>");
+				out.print(saInfo);
 				System.out.println("XCB SERVER:Config has been send to"+socket.getRemoteSocketAddress().toString());
 			} catch (Exception e) {}		
 			try {
@@ -62,7 +66,7 @@ public class XCBConfigServerSync extends Thread{
 		}
 	}
 	public void startNewThread() {
-		XCBConfigServerSync newThread=new XCBConfigServerSync(this.jsonarray,this.port);
+		XCBConfigServerSync newThread=new XCBConfigServerSync(this.jsonarray,this.saarray,this.port);
 		newThread.start();
 		this.stop();
 	}

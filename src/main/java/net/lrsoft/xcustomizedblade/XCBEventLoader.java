@@ -1,6 +1,7 @@
 package net.lrsoft.xcustomizedblade;
 
 import net.lrsoft.xcustomizedblade.EasyEditor.EasyCreateBlade;
+import net.lrsoft.xcustomizedblade.EasyEditor.EasyCreateSpecialAttack;
 import net.lrsoft.xcustomizedblade.EasyEditor.EasyNBTEditor;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -21,7 +22,8 @@ public class XCBEventLoader extends CommandBase{
 	@Override
 	public String getUsage(ICommandSender sender) {
 		String info=new String("xcb -add to open the GUI of create blade.\n"
-				+ "    -edit to open the slashblade editor.");
+				+ "    -edit to open the slashblade editor.\n"
+				+ "    -sa to open the special attack editor.\n");
 		return info;
 	}
 
@@ -46,6 +48,9 @@ public class XCBEventLoader extends CommandBase{
 	    					throw new WrongUsageException("SlashBlade must be placed in the first of inventory!");
 	    				}
 	           			break;
+	           		case "-sa":
+	           			EasyCreateSpecialAttack saWindow=new EasyCreateSpecialAttack();
+	           			saWindow.setVisible(true);
 	           		default:
 	           			throw new WrongUsageException("Unknown command!");
 	           } 

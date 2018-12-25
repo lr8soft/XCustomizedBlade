@@ -169,10 +169,14 @@ public class ConfigJsonReader {
 					}else {
 						if(this.isServer) {
 							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
-									json.get("XCustomizedBladeConfig").getAsJsonArray(),serverport);
+									json.get("XCustomizedBladeConfig").getAsJsonArray(),
+									json.get("XCustomizedSA").getAsJsonArray()
+									,serverport);
 							tcpServer.start();
 						}else {
-							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,json.get("XCustomizedBladeConfig").getAsJsonArray(),
+							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,
+									json.get("XCustomizedBladeConfig").getAsJsonArray(),
+									json.get("XCustomizedSA").getAsJsonArray(),
 									hostname,serverport);
 							tcpClient.ConfigStartSync();
 						}
@@ -237,7 +241,6 @@ public class ConfigJsonReader {
 		this.readFromJson();
 	}
 	public boolean isExisted(String name) {
-		System.out.println("Blade count:"+jsondata.size());
 		for(int i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
 			try {
