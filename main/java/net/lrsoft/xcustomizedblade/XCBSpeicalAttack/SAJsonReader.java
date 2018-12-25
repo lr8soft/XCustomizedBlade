@@ -46,31 +46,32 @@ public class SAJsonReader {
 	}
 	public void SAInit() {
 		if(willSARun) {
-			try {
 				for(int i=0;i<jsondata.size();i++) {
-					JsonObject tempobj=jsondata.get(i).getAsJsonObject();
-					tSAStep=tempobj.get("SAInfo").getAsJsonArray();
-					tStepCount=tempobj.get("SAStep").getAsJsonArray();
-					tStepDamage=tempobj.get("StepDamage").getAsJsonArray();
-					SAStep = new String[tempobj.get("SACount").getAsInt()];
-					StepCount= new int[tempobj.get("SACount").getAsInt()];
-					StepDamage=new float[tempobj.get("SACount").getAsInt()];
-					for(int j=0;j<tempobj.get("SACount").getAsInt();j++) {
-						SAStep[j]=tSAStep.get(j).getAsString();
-						StepCount[j]=tStepCount.get(j).getAsInt();
-						StepDamage[j]=tStepDamage.get(j).getAsFloat();
+					try {
+						JsonObject tempobj=jsondata.get(i).getAsJsonObject();
+						tSAStep=tempobj.get("SAInfo").getAsJsonArray();
+						tStepCount=tempobj.get("SAStep").getAsJsonArray();
+						tStepDamage=tempobj.get("StepDamage").getAsJsonArray();
+						SAStep = new String[tempobj.get("SACount").getAsInt()];
+						StepCount= new int[tempobj.get("SACount").getAsInt()];
+						StepDamage=new float[tempobj.get("SACount").getAsInt()];
+						for(int j=0;j<tempobj.get("SACount").getAsInt();j++) {
+							SAStep[j]=tSAStep.get(j).getAsString();
+							StepCount[j]=tStepCount.get(j).getAsInt();
+							StepDamage[j]=tStepDamage.get(j).getAsFloat();
+						}
+						XCustomizedSAInfo temp=new XCustomizedSAInfo(
+								tempobj.get("SAName").getAsString(),tempobj.get("SANumber").getAsInt(),
+								SAStep,StepCount,StepDamage,
+								tempobj.get("SACount").getAsInt(),tempobj.get("SACost").getAsInt());
+						SlashBlade.InitEventBus.register(temp);
+					}catch(Exception e){
+						System.out.println("XCustomizedSA:An error occur while loading.");
+						continue;
 					}
-					XCustomizedSAInfo temp=new XCustomizedSAInfo(
-							tempobj.get("SAName").getAsString(),tempobj.get("SANumber").getAsInt(),
-							SAStep,StepCount,StepDamage,
-							tempobj.get("SACount").getAsInt(),tempobj.get("SACost").getAsInt());
-					SlashBlade.InitEventBus.register(temp);
 				}
-			}catch(Exception e) {
-				System.out.println("XCustomizedSA:Fail to init SA.");
-				this.willSARun=false;
-			}
-
+		}else {
+			System.out.println("XCustomizedSA:Customized SA won't run.");
 		}
 	}
 	public boolean isExisted(String name) {
@@ -88,29 +89,34 @@ public class SAJsonReader {
 		return false;
 	}
 	public int deleteToJson(String name) {
+		if(name.equals(null)) return -1;
 		for(int i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
-			if(temp.get("SAName").getAsString().equals(name)) {
-				temp.remove("SAName");temp.remove("SANumber");
-				temp.remove("SACost");temp.remove("SAInfo");
-				temp.remove("StepDamage");temp.remove("SAStep");
-				temp.remove("BladeStandBy");temp.remove("BladeSA");
-				temp.remove("SACount");
-				this.jsoninfo.remove("XCustomizedSA");
-				this.jsoninfo.add("XCustomizedSA", jsondata);
-				Gson out=new Gson();
-				try {
-					FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
-					output.write(out.toJson(jsoninfo).getBytes());
-					output.close();
-				} catch (FileNotFoundException e) {
-					System.out.println("XCustomizedBlade Error:"+e.getMessage());
-					return -1;
-				} catch (IOException e) {
-					System.out.println("XCustomizedBlade Error:"+e.getMessage());
-					return -1;
+			try {
+				if(temp.get("SAName").getAsString().equals(name)) {
+					temp.remove("SAName");temp.remove("SANumber");
+					temp.remove("SACost");temp.remove("SAInfo");
+					temp.remove("StepDamage");temp.remove("SAStep");
+					temp.remove("BladeStandBy");temp.remove("BladeSA");
+					temp.remove("SACount");
+					this.jsoninfo.remove("XCustomizedSA");
+					this.jsoninfo.add("XCustomizedSA", jsondata);
+					Gson out=new Gson();
+					try {
+						FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");
+						output.write(out.toJson(jsoninfo).getBytes());
+						output.close();
+					} catch (FileNotFoundException e) {
+						System.out.println("XCustomizedBlade Error:"+e.getMessage());
+						return -1;
+					} catch (IOException e) {
+						System.out.println("XCustomizedBlade Error:"+e.getMessage());
+						return -1;
+					}
+					return 1;
 				}
-				return 1;
+			}catch(Exception e) {
+				continue;
 			}
 		}
 		return 0;

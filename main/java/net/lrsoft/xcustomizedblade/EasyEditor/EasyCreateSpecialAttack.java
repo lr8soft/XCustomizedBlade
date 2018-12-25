@@ -24,8 +24,13 @@ public class EasyCreateSpecialAttack extends JFrame{
 		SAInfo=new SAJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
 		saName=new String[SAInfo.jsondata.size()];
 		for(int i=0;i<SAInfo.jsondata.size();i++) {
-			JsonObject tempobj=SAInfo.jsondata.get(i).getAsJsonObject();
-			saName[i]=tempobj.get("SAName").getAsString();
+			try {
+				JsonObject tempobj=SAInfo.jsondata.get(i).getAsJsonObject();
+				saName[i]=tempobj.get("SAName").getAsString();
+			}catch(Exception e) {
+				continue;
+			}
+
 		}
 		Container menu=this.getContentPane();
 		this.setTitle("XCustomoizedBlade EasyCustomizedSA");

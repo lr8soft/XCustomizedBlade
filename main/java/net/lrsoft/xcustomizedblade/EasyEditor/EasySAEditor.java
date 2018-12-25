@@ -95,7 +95,17 @@ public class EasySAEditor extends JFrame {
 		getContentPane().add(addAction);
 		
 		JButton delAction = new JButton("删除动作");
-		delAction.setEnabled(false);
+		delAction.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if(!actionList.isSelectionEmpty()) {
+					actioncontents.remove(actionList.getSelectedIndex());
+					actioncount.remove(actionList.getSelectedIndex());
+					actiondamage.remove(actionList.getSelectedIndex());
+					JOptionPane.showMessageDialog(null, "删除成功！");
+					actionList.setModel(dlm);
+				}
+			}
+		});
 		delAction.setBounds(193, 475, 132, 47);
 		getContentPane().add(delAction);
 		
@@ -134,8 +144,13 @@ public class EasySAEditor extends JFrame {
 				}
 				int ret=SAInfo.addToJson(name.getText(),Integer.valueOf(idField.getText()),
 						Integer.valueOf(cost.getText()), scontext,scount, sdamage);
-				if(ret==1)
+				if(ret==1) {
 					JOptionPane.showMessageDialog(null, "已添加到配置中！");
+					classoutside.setVisible(false);
+					try {
+						classoutside.finalize();
+					} catch (Throwable e1) {}
+				}	
 				else
 					JOptionPane.showMessageDialog(null, "添加失败！");
 			}
@@ -184,5 +199,4 @@ public class EasySAEditor extends JFrame {
 		getContentPane().add(idField);
 		idField.setColumns(10);
 	}
-
 }
