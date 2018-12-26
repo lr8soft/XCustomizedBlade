@@ -37,8 +37,8 @@ public class EasySAEditor extends JFrame {
 	private JTextField cost;
 	private JTextField idField;
 	public EasySAEditor(EasyCreateSpecialAttack tempclass) {
-		String[] sainfo= {"幻影剑(一根)","终焉樱","闪电","MaximumBet(快速两斩)","平突"};
-		//                   0       1    2       3              4
+		String[] sainfo= {"幻影剑(一根)","终焉樱","闪电","MaximumBet(快速两斩)","平突","爆炸","次元斩"};
+		//                   0         1      2       3                4     5     6
 		inputclass=tempclass;
 		setResizable(false);
 		SAInfo=new SAJsonReader(InfoShow.getNowPath()+"/XCustomizedBlade.json");
@@ -84,6 +84,14 @@ public class EasySAEditor extends JFrame {
 							actioncontents.add("SP");
 							dlm.addElement("平突"+count.getText()+"次，总威力"+damage.getText());
 							break;
+						case 5:
+							actioncontents.add("EP");
+							dlm.addElement("爆炸"+count.getText()+"次，总威力"+damage.getText());
+							break;
+						case 6:
+							actioncontents.add("SD");
+							dlm.addElement("次元斩"+count.getText()+"次，总威力"+damage.getText());
+							break;
 					}
 					actioncount.add(Integer.valueOf(count.getText()));
 					actiondamage.add(Integer.valueOf(damage.getText()));
@@ -98,6 +106,7 @@ public class EasySAEditor extends JFrame {
 		delAction.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				if(!actionList.isSelectionEmpty()) {
+					dlm.removeElementAt(actionList.getSelectedIndex());
 					actioncontents.remove(actionList.getSelectedIndex());
 					actioncount.remove(actionList.getSelectedIndex());
 					actiondamage.remove(actionList.getSelectedIndex());

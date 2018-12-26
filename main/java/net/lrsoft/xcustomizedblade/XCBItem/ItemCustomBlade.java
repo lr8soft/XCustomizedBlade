@@ -76,6 +76,30 @@ public class ItemCustomBlade {
 		    		 		customblade.addEnchantment(SBMcEnchantment.knockback,strengthen); break;
 		    		 	case "baneOfArthropods":
 		    		 		customblade.addEnchantment(SBMcEnchantment.baneOfArthropods,strengthen); break;
+		    		 	case "blastProtection":
+		    		 		customblade.addEnchantment(SBMcEnchantment.blastProtection,strengthen); break;
+		    		 	case "featherFalling":
+		    		 		customblade.addEnchantment(SBMcEnchantment.featherFalling,strengthen); break;
+		    		 	case "fireAspect":
+		    		 		customblade.addEnchantment(SBMcEnchantment.fireAspect,strengthen); break;
+		    			case "fireProtection":
+		    		 		customblade.addEnchantment(SBMcEnchantment.fireProtection,strengthen); break;
+		    			case "flame":
+		    		 		customblade.addEnchantment(SBMcEnchantment.flame,strengthen); break;
+		    			case "fortune":
+		    		 		customblade.addEnchantment(SBMcEnchantment.fortune,strengthen); break;
+		    			case "projectileProtection":
+		    		 		customblade.addEnchantment(SBMcEnchantment.projectileProtection,strengthen); break;
+		    			case "protection":
+		    		 		customblade.addEnchantment(SBMcEnchantment.protection,strengthen); break;
+		    			case "punch":
+		    		 		customblade.addEnchantment(SBMcEnchantment.punch,strengthen); break;
+		    			case "respiration":
+		    		 		customblade.addEnchantment(SBMcEnchantment.respiration,strengthen); break;
+		    			case "silkTouch":
+		    		 		customblade.addEnchantment(SBMcEnchantment.silkTouch,strengthen); break;
+		    			case "smite":
+		    		 		customblade.addEnchantment(SBMcEnchantment.smite,strengthen); break;
 		    		 	default:
 		    		 		System.out.println("XCustomizedBlade Error:Unknown Enchantment name "+temp);
 		    		 }

@@ -1,18 +1,24 @@
 package net.lrsoft.xcustomizedblade.XCBSpeicalAttack;
 
+import com.sun.javafx.geom.Vec3d;
+
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import mods.flammpfeil.slashblade.EntityDirectAttackDummy;
 import mods.flammpfeil.slashblade.ItemSlashBlade;
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
+import mods.flammpfeil.slashblade.entity.EntitySlashDimension;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
+import net.minecraft.block.Block;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.MovingObjectPosition;
+import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
 
 public class XCustomizedSAInfo {
@@ -51,6 +57,12 @@ public class XCustomizedSAInfo {
 				case "SP":
 					target.setHealth(target.getHealth()-this.StepDamage[i]);
 					workSpear(world,player,this.SACount[i]);
+					break;
+				case "EP":
+					workExplode(world,player,target,this.StepDamage[i]);
+					break;
+				case "SD":
+					workSlashDimension(world,player,target,this.StepDamage[i]);
 					break;
 			}
 		}
@@ -93,6 +105,38 @@ public class XCustomizedSAInfo {
 	        }
 		}
 	}
+	public void workSlashDimension(World world,EntityPlayer player,EntityLivingBase target,float damage) {
+        EntitySlashDimension dim = new EntitySlashDimension(world, player, damage);
+        if (dim != null) {
+            Vec3 pos = player.getLookVec();
+            {
+                float scale = 5;
+                pos.xCoord *= scale;
+                pos.yCoord *= scale;
+                pos.zCoord *= scale;
+            }
+            pos = pos.addVector(player.posX, player.posY, player.posZ);
+            pos = pos.addVector(0, player.getEyeHeight(), 0);
+            Vec3 offset = Vec3.createVectorHelper(player.posX, player.posY, player.posZ).addVector(0,player.getEyeHeight(),0);
+            Vec3 look = player.getLookVec();
+            Vec3 offsettedLook = offset.addVector(look.xCoord * 5, look.yCoord * 5, look.zCoord * 5);
+            MovingObjectPosition movingobjectposition = world.rayTraceBlocks(offset, offsettedLook);
+            if (movingobjectposition != null && movingobjectposition.typeOfHit == MovingObjectPosition.MovingObjectType.BLOCK)
+            {
+                Block block = world.getBlock(movingobjectposition.blockX, movingobjectposition.blockY, movingobjectposition.blockZ);
+                if(block != null && block.isCollidable()){
+                    Vec3 tmppos = Vec3.createVectorHelper(movingobjectposition.hitVec.xCoord, movingobjectposition.hitVec.yCoord, movingobjectposition.hitVec.zCoord);
+                    if(1 < tmppos.distanceTo(Vec3.createVectorHelper(player.posX, player.posY, player.posZ))){
+                        pos = tmppos;
+                    }
+                }
+            }
+            dim.setPosition(pos.xCoord, pos.yCoord, pos.zCoord);
+            dim.setLifeTime(10);
+            dim.setIsSlashDimension(true);
+            world.spawnEntityInWorld(dim);
+        }
+	}
 	public void workSpear(World world,EntityPlayer player,int runtime) {
 		double playerDist = 3.5;
 		for(int i=0;i<runtime;i++) {
@@ -107,6 +151,9 @@ public class XCustomizedSAInfo {
 	        	  world.spawnEntityInWorld(entityDA);
 	          }
 		}
+	}
+	public void workExplode(World world,EntityPlayer player,EntityLivingBase target,float damage) {
+		world.createExplosion(player, target.posX, target.posY, target.posZ, damage, false);
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {
