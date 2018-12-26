@@ -2,6 +2,7 @@ package net.lrsoft.xcustomizedblade.XCBSpeicalAttack;
 
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
+import mods.flammpfeil.slashblade.entity.EntitySlashDimension;
 import mods.flammpfeil.slashblade.entity.EntitySpearManager;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
@@ -12,6 +13,7 @@ import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -33,25 +35,31 @@ public class XCustomizedSAInfo {
 	public void workToEntity(World world,EntityPlayer player,EntityLivingBase target) {
 		for(int i=0;i<this.StepCount;i++) {
 			switch(this.SAStep[i]) {
-				case "PS":
-					workPhantomSword(world,player,target,this.StepDamage[i],this.SACount[i]);
-					break;
-				case "SE":
-					target.setHealth(target.getHealth()-this.StepDamage[i]);
-					workSakuraEnd(world,player,this.SACount[i]);
-					break;
-				case "LN":
-					target.setHealth(target.getHealth()-this.StepDamage[i]);
-					workThunder(world,target,this.SACount[i]);
-					break;
-				case "MB":
-					target.setHealth(target.getHealth()-this.StepDamage[i]);
-					workMaximumBet(world,player,this.SACount[i]);
-					break;
-				case "SP":
-					target.setHealth(target.getHealth()-this.StepDamage[i]);
-					workSpear(world,player,this.SACount[i]);
-					break;
+			case "PS":
+				workPhantomSword(world,player,target,this.StepDamage[i],this.SACount[i]);
+				break;
+			case "SE":
+				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workSakuraEnd(world,player,this.SACount[i]);
+				break;
+			case "LN":
+				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workThunder(world,target,this.SACount[i]);
+				break;
+			case "MB":
+				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workMaximumBet(world,player,this.SACount[i]);
+				break;
+			case "SP":
+				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workSpear(world,player,this.SACount[i]);
+				break;
+			case "EP":
+				workExplode(world,player,target,this.StepDamage[i]);
+				break;
+			case "SD":
+				workSlashDimension(world,player,target,this.StepDamage[i]);
+				break;
 			}
 		}
 	}
@@ -93,6 +101,16 @@ public class XCustomizedSAInfo {
 	        }
 		}
 	}
+	public void workSlashDimension(World world,EntityPlayer player,EntityLivingBase target,float damage) {
+        EntitySlashDimension dim = new EntitySlashDimension(world, player, damage);
+        if (dim != null) {
+            dim.setPosition(target.posX, target.posY, target.posZ);
+            dim.setLifeTime(10);
+            dim.setIsSlashDimension(true);
+            world.spawnEntity(dim);
+        }
+
+	}
 	public void workSpear(World world,EntityPlayer player,int runtime) {
 		double playerDist = 3.5;
 		for(int i=0;i<runtime;i++) {
@@ -106,6 +124,9 @@ public class XCustomizedSAInfo {
 	              world.spawnEntity(entityDA);
 	          }
 		}
+	}
+	public void workExplode(World world,EntityPlayer player,EntityLivingBase target,float damage) {
+		world.createExplosion(player, target.posX, target.posY, target.posZ, damage, false);
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {

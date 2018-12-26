@@ -81,6 +81,42 @@ public class ItemCustomBlade {
 		    		 		customblade.addEnchantment(Enchantments.KNOCKBACK,strengthen); break;
 		    		 	case "baneOfArthropods":
 		    		 		customblade.addEnchantment(Enchantments.BANE_OF_ARTHROPODS,strengthen); break;
+		    		 	case "blastProtection":
+		    		 		customblade.addEnchantment(Enchantments.BLAST_PROTECTION,strengthen); break;
+		    		 	case "featherFalling":
+		    		 		customblade.addEnchantment(Enchantments.FEATHER_FALLING,strengthen); break;
+		    		 	case "fireAspect":
+		    		 		customblade.addEnchantment(Enchantments.FIRE_ASPECT,strengthen); break;
+		    			case "fireProtection":
+		    		 		customblade.addEnchantment(Enchantments.FIRE_PROTECTION,strengthen); break;
+		    			case "flame":
+		    		 		customblade.addEnchantment(Enchantments.FLAME,strengthen); break;
+		    			case "fortune":
+		    		 		customblade.addEnchantment(Enchantments.FORTUNE,strengthen); break;
+		    			case "projectileProtection":
+		    		 		customblade.addEnchantment(Enchantments.PROJECTILE_PROTECTION,strengthen); break;
+		    			case "protection":
+		    		 		customblade.addEnchantment(Enchantments.PROTECTION,strengthen); break;
+		    			case "punch":
+		    		 		customblade.addEnchantment(Enchantments.PUNCH,strengthen); break;
+		    			case "respiration":
+		    		 		customblade.addEnchantment(Enchantments.RESPIRATION,strengthen); break;
+		    			case "silkTouch":
+		    		 		customblade.addEnchantment(Enchantments.SILK_TOUCH,strengthen); break;
+		    			case "smite":
+		    		 		customblade.addEnchantment(Enchantments.SMITE,strengthen); break;
+		    			case "aquaAffinity":
+		    		 		customblade.addEnchantment(Enchantments.AQUA_AFFINITY,strengthen); break;
+		    			case "luckOfTheSea":
+		    		 		customblade.addEnchantment(Enchantments.LUCK_OF_THE_SEA,strengthen); break;
+		    			case "lure":
+		    		 		customblade.addEnchantment(Enchantments.LURE,strengthen); break;
+		    			case "mending":
+		    		 		customblade.addEnchantment(Enchantments.MENDING,strengthen); break;
+		    			case "sweeping":
+		    		 		customblade.addEnchantment(Enchantments.SWEEPING,strengthen); break;
+		    			case "vanishingCurse":
+		    		 		customblade.addEnchantment(Enchantments.VANISHING_CURSE,strengthen); break;
 		    		 	default:
 		    		 		System.out.println("XCustomizedBlade Error:Unknown Enchantment name "+temp);
 		    		 }
