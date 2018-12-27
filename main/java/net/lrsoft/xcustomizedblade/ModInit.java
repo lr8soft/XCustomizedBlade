@@ -12,18 +12,28 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.43,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.44,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": true,\r\n" + 
 				"  \"ServerInfo\": {\r\n" + 
 				"    \"ServerPort\": 2333,\r\n" + 
 				"    \"ServerHostName\": \"127.0.0.1\",\r\n" + 
-				"    \"SyncConfig\": true\r\n" + 
+				"    \"SyncConfig\": false\r\n" + 
 				"  },\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"BladeRecipe\": [ \"phtc2\", \"SlashBlade.bladeWood\", \"normalingot\", \"normalingot\", \"normalingot\", \"energydust\", \"energydust\", \"energydust\", \"ph_hyperdiamond\", \"ph_hyperdiamond\", \"ph_hyperdiamond\" ],\r\n" + 
+				"      \"RecipeResource\": [\r\n" + 
+				"        \"phtc2\",\"phtc2\",\"phtc2\",\r\n" + 
+				"        \"phtc2\",\"phtc2\",\"phtc2\",\r\n" + 
+				"        \"phtc2\",\"phtc2\",\"phtc2\"\r\n" + 
+				"      ],\r\n" + 
+				"      \"BladeRecipe\": [\r\n" + 
+				"        \"SlashBlade.bladeWood\",\r\n" + 
+				"        \"normalingot\",\"normalingot\",\"normalingot\",\r\n" + 
+				"        \"energydust\",\"energydust\",\"energydust\",\r\n" + 
+				"        \"ph_hyperdiamond\",\"ph_hyperdiamond\",\"ph_hyperdiamond\"\r\n" + 
+				"      ],\r\n" + 
 				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
@@ -69,19 +79,19 @@ public class ModInit {
 				"      \"BladeDuration\": 200,\r\n" + 
 				"      \"BladeWitched\": true,\r\n" + 
 				"      \"BladeStandBy\": 0,\r\n" + 
-				"      \"BladeSA\": 2333,\r\n" + 
+				"      \"BladeSA\": 123,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
 				"  ],\r\n" + 
 				"  \"XCustomizedSA\": [\r\n" + 
 				"    {\r\n" + 
-				"      \"SAName\": \"SATest0\",\r\n" + 
-				"      \"SANumber\": 2333,\r\n" + 
-				"      \"SACost\": 20,\r\n" + 
-				"      \"SAInfo\": [ \"PS\", \"SE\", \"SP\" ],\r\n" + 
-				"      \"StepDamage\": [ 1, 5, 2 ],\r\n" + 
-				"      \"SAStep\": [ 100, 3, 1 ],\r\n" + 
-				"      \"SACount\": 2\r\n" + 
+				"      \"SAName\": \"TestSA\",\r\n" + 
+				"      \"SANumber\": 123,\r\n" + 
+				"      \"SACost\": 10,\r\n" + 
+				"      \"SAInfo\": [ \"EP\", \"SD\", \"PS\", \"MB\", \"LN\" ],\r\n" + 
+				"      \"StepDamage\": [ 10, 10, 3, 3, 10 ],\r\n" + 
+				"      \"SAStep\": [ 5, 1, 100, 2, 5 ],\r\n" + 
+				"      \"SACount\": 5\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";

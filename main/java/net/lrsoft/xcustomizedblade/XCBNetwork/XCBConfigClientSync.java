@@ -43,18 +43,20 @@ public class XCBConfigClientSync {
 		}
 	}
 	public void ConfigStartSync() throws IOException{
-		try {
-			BufferedReader br=new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
-			String inputInfo="",temp="";
-			inputInfo = br.readLine();
-			while((temp = br.readLine()) != null){
-				inputInfo+=temp;
+		if(socket!=null) {
+			try {
+				BufferedReader br=new BufferedReader(new InputStreamReader(socket.getInputStream(),"UTF-8"));
+				String inputInfo="",temp="";
+				inputInfo = br.readLine();
+				while((temp = br.readLine()) != null){
+					inputInfo+=temp;
+				}
+				System.out.println("XCB Client:Input config:"+inputInfo);
+				updataToJson(inputInfo);
+				socket.close();
+			} catch (Exception e) {
+				e.printStackTrace();
 			}
-			System.out.println("XCB Client:Input config:"+inputInfo);
-			updataToJson(inputInfo);
-			socket.close();
-		} catch (Exception e) {
-			e.printStackTrace();
 		}
 	}
 	private void updataToJson(String newinfo) {

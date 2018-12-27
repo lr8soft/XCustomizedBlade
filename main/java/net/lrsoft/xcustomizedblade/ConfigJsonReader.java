@@ -41,8 +41,10 @@ public class ConfigJsonReader {
 	}
 	public void itemInit() {
 		this.datalen=jsondata.size();
-		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null;
-		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;String[] recipeName= new String[11];
+		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null,recipeSource=null;
+		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;
+		String[] recipeName= new String[10];
+		String[] recipeSourceName= new String[9];
 		for(i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
 			try {
@@ -70,14 +72,20 @@ public class ConfigJsonReader {
 				System.out.println("XCustomizedBlade Info:Using custom recipe");
 				try {
 					recipeItems=temp.get("BladeRecipe").getAsJsonArray();
+					recipeSource=temp.get("RecipeResource").getAsJsonArray();
 				}catch(NullPointerException e) {
 					System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t recipe.");
 					this.CustomRecipe=false;
 				}
-				for(int j=0;j<11;j++) {
+				for(int j=0;j<10;j++) {
 					try {
-						if(recipeItems.get(j).isJsonNull()==false)
+						if(!recipeItems.get(j).isJsonNull()) {
 							recipeName[j]=recipeItems.get(j).getAsString();
+							if(j>0) {
+								if(!recipeSource.get(j-1).isJsonNull())
+									recipeSourceName[j-1]=recipeItems.get(j-1).getAsString();
+							}
+						}
 					}catch(NullPointerException e) {
 						continue;
 					}
@@ -85,7 +93,7 @@ public class ConfigJsonReader {
 			}
 			if(bladename==null||bladeModel==null||bladeTexture==null||showName==null) continue;
 			ItemCustomBlade blade=new ItemCustomBlade(sa,standby,duration,color,
-					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,CustomRecipe,recipeName);
+					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,CustomRecipe,recipeSourceName,recipeName);
 			SlashBlade.InitEventBus.register(blade);
 			System.out.println(sa+" "+standby+" "+duration+" "+color+" "+iswithed+" "+
 					bladedamage+" "+bladename+" "+bladeModel+" "+bladeTexture);
@@ -164,17 +172,19 @@ public class ConfigJsonReader {
 					String hostname;int serverport;
 					hostname=serverdata.get("ServerHostName").getAsString();
 					serverport=serverdata.get("ServerPort").getAsInt();
-					System.out.println("XCustomizedBlade:Start to sync to server "+hostname+":"+serverport);
+					System.out.println("XCustomizedBlade:server info:"+hostname+":"+serverport);
 					if(serverdata.get("SyncConfig").getAsBoolean()==false) {
 						System.out.println("XCustomizedBlade:Won't sync to server->from config");
 					}else {
 						if(this.isServer) {
+							System.out.println("XCustomizedBlade:SERVER Now start.");
 							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
 									json.get("XCustomizedBladeConfig").getAsJsonArray(),
 									json.get("XCustomizedSA").getAsJsonArray()
 									,serverport);
 							tcpServer.start();
 						}else {
+							System.out.println("XCustomizedBlade:Start to connect with SERVER.");
 							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,
 									json.get("XCustomizedBladeConfig").getAsJsonArray(),
 									json.get("XCustomizedSA").getAsJsonArray(),

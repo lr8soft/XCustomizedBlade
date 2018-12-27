@@ -10,7 +10,7 @@ import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="1.43",dependencies="required-after:flammpfeil.slashblade")
+@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="1.44",dependencies="required-after:flammpfeil.slashblade")
 public class XCustomizedBlade {
 	@SidedProxy(clientSide = "net.lrsoft.xcustomizedblade.ClientProxy",serverSide = "net.lrsoft.xcustomizedblade.CommonProxy")
 	private static CommonProxy proxy; 
