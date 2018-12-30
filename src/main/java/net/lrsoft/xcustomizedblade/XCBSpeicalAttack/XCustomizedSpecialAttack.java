@@ -55,8 +55,11 @@ public class XCustomizedSpecialAttack extends SpecialAttackBase {
                       blade.setDaunting((EntityLivingBase)target);
                       ((EntityLivingBase) target).hurtTime = 5;
                       ((EntityLivingBase) target).hurtResistantTime = 5;
+                      this.SAInfo.workToEntity(world, player, (EntityLivingBase)target);
+                  }else {
+                	  this.SAInfo.workMaximumBet(world, player, 2);
                   }
-                  this.SAInfo.workToEntity(world, player, (EntityLivingBase)target);
+                  
           }
         }
     }
