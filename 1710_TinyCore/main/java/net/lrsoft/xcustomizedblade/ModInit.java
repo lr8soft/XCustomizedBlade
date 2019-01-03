@@ -104,14 +104,13 @@ public class ModInit {
 	public void checkInit() {
 		if(this.checkConfig()==false) {
 			try {
-				System.out.println("XCustomizedBlade TinyCore:Now setting the first time running environment.");
+				System.out.println("XCustomizedBlade:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
-				out.write(this.STDJsonConfig.getBytes());
-				out.close();
-				 OutputStreamWriter outwriter=new OutputStreamWriter(out,"GB2312");
+		/*		 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
 				 outwriter.write(this.STDJsonConfig);
 				 outwriter.flush();
-				 outwriter.close();
+				 outwriter.close();*/
+				 out.write(this.STDJsonConfig.getBytes());
 				 out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
