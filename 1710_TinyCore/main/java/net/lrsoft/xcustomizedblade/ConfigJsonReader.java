@@ -63,6 +63,7 @@ public class ConfigJsonReader {
 			try {
 				Enchantment=temp.get("Enchantment").getAsJsonArray();
 			}catch(NullPointerException e) {
+				Enchantment=null;
 				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t enchantment.");
 			}
 			if(this.CustomRecipe==true) {

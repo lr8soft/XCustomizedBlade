@@ -12,8 +12,9 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.45,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.46,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
+				"  \"ToolRecipe\": false,\r\n" + 
 				"  \"XCBTinyCore\": true,\r\n" + 
 				"  \"ServerInfo\": {\r\n" + 
 				"    \"ServerPort\": 2333,\r\n" + 
@@ -105,7 +106,12 @@ public class ModInit {
 			try {
 				System.out.println("XCustomizedBlade TinyCore:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
-				 out.write(this.STDJsonConfig.getBytes());
+				out.write(this.STDJsonConfig.getBytes());
+				out.close();
+				 OutputStreamWriter outwriter=new OutputStreamWriter(out,"GB2312");
+				 outwriter.write(this.STDJsonConfig);
+				 outwriter.flush();
+				 outwriter.close();
 				 out.close();
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
