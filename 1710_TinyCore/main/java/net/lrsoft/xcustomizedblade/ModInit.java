@@ -24,17 +24,6 @@ public class ModInit {
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
 				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"RecipeResource\": [\r\n" + 
-				"        \"phtc2\", \"phtc2\", \"phtc2\",\r\n" + 
-				"        \"phtc2\", \"phtc2\", \"phtc2\",\r\n" + 
-				"        \"phtc2\", \"phtc2\", \"phtc2\"\r\n" + 
-				"      ],\r\n" + 
-				"      \"BladeRecipe\": [\r\n" + 
-				"        \"SlashBlade.bladeWood\",\r\n" + 
-				"        \"normalingot\", \"normalingot\", \"normalingot\",\r\n" + 
-				"        \"energydust\",  \"energydust\", \"energydust\",\r\n" + 
-				"        \"ph_hyperdiamond\", \"ph_hyperdiamond\", \"ph_hyperdiamond\"\r\n" + 
-				"      ],\r\n" + 
 				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
 				"      \"BladeModel\": \"model/1\",\r\n" + 
 				"      \"BladeTexture\": \"texture/1\",\r\n" + 
