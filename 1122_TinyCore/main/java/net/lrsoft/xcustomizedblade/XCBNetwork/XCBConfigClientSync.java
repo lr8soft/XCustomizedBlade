@@ -39,6 +39,7 @@ public class XCBConfigClientSync {
 		this.oldJson=old;
 		try {
 			socket=new Socket(hostname,port);
+			socket.setSoTimeout(6000);
 		}catch(Exception e) {
 			System.out.println("XCB Client:Failed to create socket.Wrong address or port?");
 			willRun=false;

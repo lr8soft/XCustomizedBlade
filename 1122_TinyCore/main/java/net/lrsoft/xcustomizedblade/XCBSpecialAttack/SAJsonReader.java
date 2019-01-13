@@ -21,7 +21,7 @@ public class SAJsonReader {
 	public JsonObject jsoninfo;
 	public String jsonpath;
 	public JsonArray jsondata;
-	private boolean willSARun;
+	private boolean willSARun,attackAll;
 	private JsonArray tSAStep,tStepCount,tStepDamage;
 	public String[] SAStep;
 	public int[] StepCount;
@@ -55,6 +55,12 @@ public class SAJsonReader {
 						SAStep = new String[tempobj.get("SACount").getAsInt()];
 						StepCount= new int[tempobj.get("SACount").getAsInt()];
 						StepDamage=new float[tempobj.get("SACount").getAsInt()];
+						try {
+							attackAll=tempobj.get("PeaceSelector").getAsBoolean();
+						}catch(Exception e) {
+							attackAll=false;
+							System.out.println("XCustomizedSA:The config file is from old VER,which haven\'t peace selector.");
+						}
 						for(int j=0;j<tempobj.get("SACount").getAsInt();j++) {
 							SAStep[j]=tSAStep.get(j).getAsString();
 							StepCount[j]=tStepCount.get(j).getAsInt();
@@ -63,7 +69,7 @@ public class SAJsonReader {
 						XCustomizedSAInfo temp=new XCustomizedSAInfo(
 								tempobj.get("SAName").getAsString(),tempobj.get("SANumber").getAsInt(),
 								SAStep,StepCount,StepDamage,
-								tempobj.get("SACount").getAsInt(),tempobj.get("SACost").getAsInt());
+								tempobj.get("SACount").getAsInt(),tempobj.get("SACost").getAsInt(),attackAll);
 						SlashBlade.InitEventBus.register(temp);
 					}catch(Exception e){
 						System.out.println("XCustomizedSA:An error occur while loading.");

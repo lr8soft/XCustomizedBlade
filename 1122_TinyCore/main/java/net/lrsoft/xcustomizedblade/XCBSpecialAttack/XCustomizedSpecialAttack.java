@@ -2,11 +2,14 @@ package net.lrsoft.xcustomizedblade.XCBSpecialAttack;
 
 import java.util.List;
 
+import com.google.common.base.Predicate;
+
 import mods.flammpfeil.slashblade.ability.StylishRankManager;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.specialattack.SpecialAttackBase;
+import net.lrsoft.xcustomizedblade.XCBUtil.XCBEntitySelectorAttackable;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,12 +20,15 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 public class XCustomizedSpecialAttack extends SpecialAttackBase {
+	private Predicate<Entity> selector;
 	private XCustomizedSAInfo SAInfo;
-	public XCustomizedSpecialAttack(XCustomizedSAInfo info) {
-		this.SAInfo=info;
+	private boolean attackAll;
+	public XCustomizedSpecialAttack(XCustomizedSAInfo info,boolean attackAll) {
+		selector=XCBEntitySelectorAttackable.getInstance();
+		this.SAInfo=info;this.attackAll=attackAll;
 	}
 
-    @Override
+	@Override
     public void doSpacialAttack(ItemStack stack, EntityPlayer player) {
         World world = player.world;
         NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(stack);
@@ -79,7 +85,12 @@ public class XCustomizedSpecialAttack extends SpecialAttackBase {
             bb = bb.grow(2.0f, 0.25f, 2.0f);
             bb = bb.offset(vec.x*(float)dist,vec.y*(float)dist,vec.z*(float)dist);
 
-            List<Entity> list = world.getEntitiesInAABBexcluding(player, bb, EntitySelectorAttackable.getInstance());
+            List<Entity> list;
+            if(attackAll) {
+            	list= world.getEntitiesInAABBexcluding(player, bb, selector);
+            }else {
+            	list= world.getEntitiesInAABBexcluding(player, bb, EntitySelectorAttackable.getInstance());
+            }
             float distance = 30.0f;
             for(Entity curEntity : list){
                 float curDist = curEntity.getDistance(player);

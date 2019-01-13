@@ -1,5 +1,10 @@
 package net.lrsoft.xcustomizedblade.XCBSpecialAttack;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
 import mods.flammpfeil.slashblade.entity.EntitySlashDimension;
@@ -8,6 +13,7 @@ import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
+import net.lrsoft.xcustomizedblade.InfoShow;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
@@ -16,6 +22,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class XCustomizedSAInfo {
 	public String SAName;
@@ -23,7 +31,9 @@ public class XCustomizedSAInfo {
 	public int SACount[];
 	public float StepDamage[];
 	public int StepCount,SAcost,SANum;
-	public XCustomizedSAInfo(String name,int SANum,String info[],int count[],float StepDamage[],int step,int cost) {
+	public boolean attackAll;
+	public XCustomizedSAInfo(String name,int SANum,String info[],int count[],float StepDamage[],int step,int cost,
+			boolean attackAll) {
 		this.SANum=SANum;
 		this.SAName=name;
 		this.SAStep=info;
@@ -31,6 +41,7 @@ public class XCustomizedSAInfo {
 		this.SACount=count;
 		this.StepCount=step;
 		this.StepDamage=StepDamage;
+		this.attackAll=attackAll;
 	}
 	public void workToEntity(World world,EntityPlayer player,EntityLivingBase target) {
 		for(int i=0;i<this.StepCount;i++) {
@@ -60,8 +71,31 @@ public class XCustomizedSAInfo {
 			case "SD":
 				workSlashDimension(world,player,target,this.StepDamage[i]);
 				break;
+			case "DL":
+				try {
+					workDelay(world,player,this.SACount[i]);
+				}catch(NoSuchMethodError e) {}
+				break;
 			}
 		}
+	}
+	@SideOnly(Side.CLIENT)
+	public void workDelay(World world,EntityPlayer player,int time) {
+		try {
+			FileOutputStream out=new FileOutputStream(InfoShow.getNowPath()+"/XCB_DELAY_TEMP.dat");
+			for(int i=0;i<time;i++) {
+				out.write(String.valueOf(Math.sin(i*Math.cos(i+Math.acos(i))+Math.PI)).getBytes());
+			}
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		 File file=new File(InfoShow.getNowPath()+"/XCB_DELAY_TEMP.dat");
+         if(file.exists())
+             file.delete();
 	}
 	public void workPhantomSword(World world,EntityPlayer player,EntityLivingBase target,float damage,int runtime) {
         for(int i=0;i<runtime;i++) {
@@ -130,6 +164,6 @@ public class XCustomizedSAInfo {
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {
-		ItemSlashBlade.specialAttacks.put(this.SANum, new XCustomizedSpecialAttack(this));
+		ItemSlashBlade.specialAttacks.put(this.SANum, new XCustomizedSpecialAttack(this,attackAll));
 	}
 }

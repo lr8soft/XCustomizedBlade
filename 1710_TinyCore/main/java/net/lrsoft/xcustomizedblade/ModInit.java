@@ -93,7 +93,6 @@ public class ModInit {
 				"      \"StepDamage\": [ 10, 10, 3, 3, 10 ],\r\n" + 
 				"      \"SAStep\": [ 5, 1, 100, 2, 5 ],\r\n" + 
 				"      \"SACount\": 5\r\n" + 
-				"      \"PeaceSelector\": true\r\n"+
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";
