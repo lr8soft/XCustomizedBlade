@@ -12,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.46,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.47,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": false,\r\n" + 
 				"  \"XCBTinyCore\": true,\r\n" + 
@@ -93,6 +93,7 @@ public class ModInit {
 				"      \"StepDamage\": [ 10, 10, 3, 3, 10 ],\r\n" + 
 				"      \"SAStep\": [ 5, 1, 100, 2, 5 ],\r\n" + 
 				"      \"SACount\": 5\r\n" + 
+				"      \"PeaceSelector\": true\r\n"+
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";
@@ -104,7 +105,7 @@ public class ModInit {
 	public void checkInit() {
 		if(this.checkConfig()==false) {
 			try {
-				System.out.println("XCustomizedBlade:Now setting the first time running environment.");
+				System.out.println("XCustomizedBlade TinyCore:Now setting the first time running environment.");
 				FileOutputStream out=new FileOutputStream(this.path);
 		/*		 OutputStreamWriter outwriter=new OutputStreamWriter(out,"UTF-8");
 				 outwriter.write(this.STDJsonConfig);
