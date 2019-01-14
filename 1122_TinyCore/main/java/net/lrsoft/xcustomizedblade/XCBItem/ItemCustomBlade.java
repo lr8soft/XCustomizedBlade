@@ -11,6 +11,7 @@ import mods.flammpfeil.slashblade.RecipeAwakeBlade;
 import mods.flammpfeil.slashblade.SlashBlade;
 import mods.flammpfeil.slashblade.named.NamedBladeManager;
 import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
+import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import mods.flammpfeil.slashblade.tileentity.DummyTileEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -29,17 +30,16 @@ import net.minecraft.init.Enchantments;
 import net.minecraft.init.Items;
 import net.minecraft.enchantment.Enchantment;
 public class ItemCustomBlade {
-	private String[] recipeItems;
 	private JsonArray Enchantment;
-	private int sa,standby,bladeduration,color;
-	private boolean iswitched,useCustomRecipe;private float bladedamage;
-	private String bladename,bladeModel,bladeTexture,showName;
+	private int sa,standby,bladeduration,color,seLevel;
+	private boolean iswitched;private float bladedamage;
+	private String bladename,bladeModel,bladeTexture,showName,seName;
 	public ItemCustomBlade(int sa,int standby,int duration,int color,boolean iswithed,float bladedamage,String bladename,
-			String showName,String bladeModel,String bladeTexture,JsonArray list,boolean useCustomRecipe,String[] recipeItems) {
+			String showName,String bladeModel,String bladeTexture,JsonArray list,String SEName,int SELevel) {
 		this.sa=sa;this.standby=standby;this.bladeduration=duration;this.iswitched=iswithed;
 		this.bladedamage=bladedamage;this.bladeModel=bladeModel;this.bladeTexture=bladeTexture;
 		this.bladename=bladename;this.color=color;this.showName=showName;this.Enchantment=list;
-		this.recipeItems=recipeItems;this.useCustomRecipe=useCustomRecipe;
+		this.seLevel=SELevel;this.seName=SEName;
 	}
 	 @SubscribeEvent
 	public void Init(InitEvent event) {
@@ -47,6 +47,8 @@ public class ItemCustomBlade {
 	      NBTTagCompound tag = new NBTTagCompound();
 	      customblade.setTagCompound(tag);
 	      customblade.setStackDisplayName(showName);
+	      if(this.seName!=null)
+	    	  SpecialEffects.addEffect(customblade, seName, seLevel);
 	      ItemSlashBladeNamed.CurrentItemName.set(tag, bladename);
 	      ItemSlashBladeNamed.CustomMaxDamage.set(tag, bladeduration);
 	      ItemSlashBladeNamed.setBaseAttackModifier(tag, bladedamage);
@@ -123,81 +125,11 @@ public class ItemCustomBlade {
 	    		}
 	    	  }
 	      }
-    	  ItemStack[] recipeNeed = new ItemStack[10];
-    	  if(this.useCustomRecipe==true) {	  
-       /* 	  int j;String source = null,name;
-        	  try {
-        		  recipeNeed[0]=SlashBlade.findItemStack("flammpfeil.slashblade", recipeItems[0],1);
-        	  }catch(Exception e) {
-        		  recipeNeed[0]=null;  
-        	  }  
-        	  for(j=1;j<19;j++) {
-        		  if(j%2==1) {
-        				  try {
-        					  source=recipeItems[j];
-        				  }catch(Exception e) {
-        					  recipeNeed[j]=null;;
-        			      }
-        		  }else {
-        			  name=recipeItems[j];
-        			  try {
-        				  recipeNeed[j]=SlashBlade.findItemStack(source, recipeItems[j],1);
-        			  }catch(NullPointerException e) {
-        				  recipeNeed[j]=null;
-        			  }
-        		  }
-        	  }
-        	  BladeRecipeInit(this,customblade,recipeNeed);*/
-          }
+    	
           SlashBlade.registerCustomItemStack(bladename, customblade);
           ItemSlashBladeNamed.NamedBlades.add(bladename);
           NamedBladeManager.registerBladeSoul(tag, bladename);
      }
 	 public static void BladeRecipeInit(ItemCustomBlade bladeObject,ItemStack blade,ItemStack recipe[]) {
-		 int recipeElement=0,trecipe=0;
-		 char[] recipeTemp=new char[3];
-		 String[] truerecipe=new String[3];
-		 for(int i=1;i<10;i++) {
-			 for(int j=0;j<3;j++) {
-				 if(recipe[i].equals(null)) {
-					 recipeTemp[j]=' ';
-				 }else {
-					 switch(recipeElement) {
-					 	case 0:
-					 		recipeTemp[j]='A';break;
-					 	case 1:
-					 		recipeTemp[j]='B';break;
-					 	case 2:
-					 		recipeTemp[j]='C';break;
-					 	case 3:
-					 		recipeTemp[j]='D';break;
-					 	case 4:
-					 		recipeTemp[j]='E';break;
-					 	case 5:
-					 		recipeTemp[j]='F';break;
-					 	case 6:
-					 		recipeTemp[j]='G';break;
-					 	case 7:
-					 		recipeTemp[j]='H';break;
-					 	case 8:
-					 		recipeTemp[j]='I';break;
-					 }
-				 }
-				 recipeElement++;
-			 }
-			 truerecipe[trecipe++]=recipeTemp.toString();
-		 }
-		 SlashBlade.addRecipe(bladeObject.bladename, new RecipeAwakeBlade(new ResourceLocation(SlashBlade.modid,bladeObject.bladename),blade, recipe[0],
-	    		  new Object[]{truerecipe[0],truerecipe[1],truerecipe[2],
-	              Character.valueOf('A'),recipe[1],
-	              Character.valueOf('B'), recipe[2],
-	              Character.valueOf('C'), recipe[3],
-	              Character.valueOf('D'), recipe[4],
-	              Character.valueOf('E'), recipe[5],
-	              Character.valueOf('F'), recipe[6],
-	              Character.valueOf('G'), recipe[7],
-	              Character.valueOf('H'), recipe[8],
-	              Character.valueOf('I'), recipe[9],
-	    		  }));
 	 }
 }

@@ -8,7 +8,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
-@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="1.44",dependencies="required-after:flammpfeil.slashblade")
+@Mod(modid="xcustomizedblade",name="XCustomizedBlade", version="1.50",dependencies="required-after:flammpfeil.slashblade")
 public class XCustomizedBlade {
 	@SidedProxy(clientSide = "net.lrsoft.xcustomizedblade.ClientProxy",serverSide = "net.lrsoft.xcustomizedblade.CommonProxy")
 	public static CommonProxy proxy; 

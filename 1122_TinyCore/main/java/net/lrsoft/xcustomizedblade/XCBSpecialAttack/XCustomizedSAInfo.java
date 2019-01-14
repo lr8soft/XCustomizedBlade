@@ -17,6 +17,7 @@ import net.lrsoft.xcustomizedblade.InfoShow;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.Vec3d;
@@ -75,6 +76,9 @@ public class XCustomizedSAInfo {
 				try {
 					workDelay(world,player,this.SACount[i]);
 				}catch(NoSuchMethodError e) {}
+				break;
+			case "PE":
+				workPotionEffect(player,this.SACount[i],(float)this.StepDamage[i]);
 				break;
 			}
 		}
@@ -161,6 +165,70 @@ public class XCustomizedSAInfo {
 	}
 	public void workExplode(World world,EntityPlayer player,EntityLivingBase target,float damage) {
 		world.createExplosion(player, target.posX, target.posY, target.posZ, damage, false);
+	}
+	public void workPotionEffect(EntityPlayer player,int type,float time) {
+		switch(type) {
+			case 0://blindness
+				player.addPotionEffect(new PotionEffect(MobEffects.BLINDNESS,(int)time,2));
+				break;
+			case 1://ABSORPTION
+				player.addPotionEffect(new PotionEffect(MobEffects.ABSORPTION,(int)time,2));
+				break;
+			case 2://STRENGTH
+				player.addPotionEffect(new PotionEffect(MobEffects.STRENGTH,(int)time,2));
+				break;
+			case 3://digSlowdown
+				player.addPotionEffect(new PotionEffect(MobEffects.MINING_FATIGUE,(int)time,2));
+				break;
+			case 4://digSpeed
+				player.addPotionEffect(new PotionEffect(MobEffects.SPEED,(int)time,2));
+				break;
+			case 5://fireResistance
+				player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE,(int)time,2));
+				break;
+			case 6://harm
+				player.addPotionEffect(new PotionEffect(MobEffects.INSTANT_DAMAGE,(int)time,2));
+				break;
+			case 7://heal
+				player.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST,(int)time,2));
+				break;
+			case 8://hunger
+				player.addPotionEffect(new PotionEffect(MobEffects.HUNGER,(int)time,2));
+				break;
+			case 9://invisibility
+				player.addPotionEffect(new PotionEffect(MobEffects.INVISIBILITY,(int)time,2));
+				break;
+			case 10://jump
+				player.addPotionEffect(new PotionEffect(MobEffects.JUMP_BOOST,(int)time,2));
+				break;
+			case 11://moveSlowdown
+				player.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,(int)time,2));
+				break;
+			case 12://moveSpeed
+				player.addPotionEffect(new PotionEffect(MobEffects.SPEED,(int)time,2));
+				break;
+			case 13://nightVision
+				player.addPotionEffect(new PotionEffect(MobEffects.NIGHT_VISION,(int)time,2));
+				break;
+			case 14://poison
+				player.addPotionEffect(new PotionEffect(MobEffects.POISON,(int)time,2));
+				break;
+			case 15://regeneration
+				player.addPotionEffect(new PotionEffect(MobEffects.REGENERATION,(int)time,2));
+				break;
+			case 16://resistance
+				player.addPotionEffect(new PotionEffect(MobEffects.RESISTANCE,(int)time,2));
+				break;
+			case 17://waterBreathing
+				player.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING,(int)time,2));
+				break;
+			case 18://weakness
+				player.addPotionEffect(new PotionEffect(MobEffects.WEAKNESS,(int)time,2));
+				break;
+			case 19://wither
+				player.addPotionEffect(new PotionEffect(MobEffects.WITHER,(int)time,2));
+				break;
+		}
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {

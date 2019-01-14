@@ -25,7 +25,7 @@ public class ModInit {
 				"    {\r\n" + 
 				"      \"BladeName\": \"TestBlade[Technology Revolution]\",\r\n" + 
 				"      \"Enchantment\": [ \"power\", 12, \"sharpness\", 12 ],\r\n" + 
-				"      \"BladeShowName\": \"测之刃【技术革新】\",\r\n" + 
+				"      \"BladeShowName\": \"TestBlade【TechREV】\",\r\n" + 
 				"      \"BladeModel\": \"model/2\",\r\n" + 
 				"      \"BladeTexture\": \"texture/2\",\r\n" + 
 				"      \"BladeDamge\": 1024.0,\r\n" + 

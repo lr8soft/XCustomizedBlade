@@ -1,0 +1,8 @@
+﻿
+#Language for XCustomizedBlade,you can add your information here.
+item.flammpfeil.slashblade.named.TestBlade[Technology Revolution].name=TestBlade[Technology Revolution]
+
+flammpfeil.slashblade.specialattack.TestSA=XCustomized TestSA
+
+slashblade.seffect.name.TestSE=XCustomized TestSE
+

@@ -13,9 +13,6 @@ import java.net.InetAddress;
 import java.net.MulticastSocket;
 import java.net.ServerSocket;
 import java.net.Socket;
-
-import javax.swing.JOptionPane;
-
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 
@@ -23,14 +20,15 @@ import net.lrsoft.xcustomizedblade.ConfigJsonReader;
 import net.lrsoft.xcustomizedblade.InfoShow;
 
 public class XCBConfigServerSync extends Thread{
-	private JsonArray jsonarray,saarray;
+	private JsonArray jsonarray,saarray,searray;
 	private OutputStreamWriter output;
 	private ServerSocket server;
 	private Socket socket;
 	private int port;
-	public XCBConfigServerSync(JsonArray inputblade,JsonArray inputsa,int port){
+	public XCBConfigServerSync(JsonArray inputblade,JsonArray inputsa,JsonArray inputse,int port){
 		this.jsonarray=inputblade;
 		this.saarray=inputsa;
+		this.searray=inputse;
 		this.port=port;
 		try {
 			server=new ServerSocket(port);
@@ -46,12 +44,15 @@ public class XCBConfigServerSync extends Thread{
 		while(true) {
 			String jsonInfo=jsonarray.toString();
 			String saInfo=saarray.toString();
+			String seInfo=searray.toString();
 			try {
 				socket=server.accept();
 				PrintWriter out = new PrintWriter(new OutputStreamWriter(socket.getOutputStream(),"UTF-8"),true);
 				out.print(jsonInfo);
 				out.print(">>>>>");
 				out.print(saInfo);
+				out.print(">>>>>");
+				out.print(seInfo);
 				System.out.println("XCB SERVER:Config has been send to"+socket.getRemoteSocketAddress().toString());
 			} catch (Exception e) {}		
 			try {
@@ -66,7 +67,7 @@ public class XCBConfigServerSync extends Thread{
 		}
 	}
 	public void startNewThread() {
-		XCBConfigServerSync newThread=new XCBConfigServerSync(this.jsonarray,this.saarray,this.port);
+		XCBConfigServerSync newThread=new XCBConfigServerSync(this.jsonarray,this.saarray,this.searray,this.port);
 		newThread.start();
 		this.stop();
 	}

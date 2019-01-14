@@ -1,18 +1,20 @@
 package net.lrsoft.xcustomizedblade.XCBSpecialEffect;
 
-import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import mods.flammpfeil.slashblade.ItemSlashBlade;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
+import mods.flammpfeil.slashblade.specialeffect.IRemovable;
 import mods.flammpfeil.slashblade.specialeffect.ISpecialEffect;
 import mods.flammpfeil.slashblade.specialeffect.SpecialEffects;
 import mods.flammpfeil.slashblade.util.SlashBladeEvent;
 import mods.flammpfeil.slashblade.util.SlashBladeHooks;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class XCustomziedSpecialEffect implements ISpecialEffect{
+public class XCustomziedSpecialEffect implements  ISpecialEffect{
     private XCustomizedSEStandard SEInfo;
     public XCustomziedSpecialEffect(XCustomizedSEStandard info) {
     	this.SEInfo=info;
@@ -27,7 +29,7 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
     public void onUpdateItemSlashBlade(SlashBladeEvent.OnUpdateEvent event){
         if(!SpecialEffects.isPlayer(event.entity)) return; 
         EntityPlayer player = (EntityPlayer) event.entity;
-        World world = player.worldObj;
+        World world = player.world;
         NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(event.blade);
         if(!useBlade(ItemSlashBlade.getComboSequence(tag))) return;
         switch (SpecialEffects.isEffective(player,event.blade,this)){
@@ -36,8 +38,8 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
             case NonEffective:
                 break;
             case Effective:
-                if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
-                   ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
+            	if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
+                     ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
                 }
                 XCustomizedSEWork SpecialEffect=new XCustomizedSEWork(SEInfo.SEStep,SEInfo.SERuntime,SEInfo.SEDamage);
                 SpecialEffect.workToSE(world,player);
