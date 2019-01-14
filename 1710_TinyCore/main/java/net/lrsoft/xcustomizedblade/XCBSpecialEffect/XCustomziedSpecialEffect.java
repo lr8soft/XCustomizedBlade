@@ -36,10 +36,13 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
             case NonEffective:
                 break;
             case Effective:
-            	if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
-                    ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
-                }
-            	 player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(),200,2,true));
+            	if(!world.isRemote){
+                   	if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
+                        ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
+                    }
+                	XCustomizedSEWork SpecialEffect=new XCustomizedSEWork(SEInfo.SEStep,SEInfo.SERuntime,SEInfo.SEDamage);
+                	SpecialEffect.workToSE(world,player);
+            	}
             	break;
         }
     }

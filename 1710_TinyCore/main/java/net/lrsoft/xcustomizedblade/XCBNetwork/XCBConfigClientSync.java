@@ -27,13 +27,14 @@ import net.lrsoft.xcustomizedblade.InfoShow;
 public class XCBConfigClientSync {
 	private  Socket socket=null;
 	private JsonObject oldJson;
-	private JsonArray jsondata,sadata;
+	private JsonArray jsondata,sadata,sedata;
 	private String hostname;
 	private int port;
 	private int runtime=0;
-	public XCBConfigClientSync(JsonObject old,JsonArray input,JsonArray inputsa,String hostname,int port) {
+	public XCBConfigClientSync(JsonObject old,JsonArray input,JsonArray inputsa,JsonArray inputse,String hostname,int port) {
 		this.jsondata=input;
 		this.sadata=inputsa;
+		this.sedata=inputse;
 		this.hostname=hostname;
 		this.port=port;
 		this.oldJson=old;
@@ -64,10 +65,11 @@ public class XCBConfigClientSync {
 	private void updataToJson(String newinfo) {
 		JsonParser jp=new JsonParser();
 		JsonObject json=null;
-		JsonArray newArray=null,saArray=null;
+		JsonArray newArray=null,saArray=null,seArray=null;
 		String writeInfo="{\r\n" + 
 				"  \"temp\":";
 		String bodyInfo="\r\n,\"temp2\":";
+		String bodyInfo2="\r\n,\"temp3\":";
 		String tailInfo="\r\n}";
 		String[] getInfo=newinfo.split(">>>>>");
 		for(int i=0;i<getInfo.length;i++) {
@@ -82,6 +84,8 @@ public class XCBConfigClientSync {
 			output.write(getInfo[0]);
 			output.write(bodyInfo);
 			output.write(getInfo[1]);
+			output.write(bodyInfo2);
+			output.write(getInfo[2]);
 			output.write(tailInfo);
 			output.flush();
 			output.close();
@@ -94,6 +98,7 @@ public class XCBConfigClientSync {
 		try {
 			newArray=json.get("temp").getAsJsonArray();
 			saArray=json.get("temp2").getAsJsonArray();
+			seArray=json.get("temp3").getAsJsonArray();
 		}catch(Exception e) {
 			return;
 		}
@@ -102,6 +107,8 @@ public class XCBConfigClientSync {
 			oldJson.add("XCustomizedBladeConfig", newArray);
 			oldJson.remove("XCustomizedSA");
 			oldJson.add("XCustomizedSA", saArray);
+			oldJson.remove("XCustomizedSE");
+			oldJson.add("XCustomizedSE", seArray);
 			Gson outJson=new Gson();
 			try {
 				FileOutputStream output=new FileOutputStream(InfoShow.getNowPath()+"/XCustomizedBlade.json");

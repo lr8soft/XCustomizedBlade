@@ -25,14 +25,15 @@ import net.minecraft.init.Items;
 import net.lrsoft.xcustomizedblade.SBMcEnchantment;
 public class ItemCustomBlade {
 	private JsonArray Enchantment;
-	private int sa,standby,bladeduration,color;
+	private int sa,standby,bladeduration,color,seLevel;
 	private boolean iswitched;private float bladedamage;
-	private String bladename,bladeModel,bladeTexture,showName;
+	private String bladename,bladeModel,bladeTexture,showName,seName;
 	public ItemCustomBlade(int sa,int standby,int duration,int color,boolean iswithed,float bladedamage,String bladename,
-			String showName,String bladeModel,String bladeTexture,JsonArray list) {
+			String showName,String bladeModel,String bladeTexture,JsonArray list,String SEName,int SELevel) {
 		this.sa=sa;this.standby=standby;this.bladeduration=duration;this.iswitched=iswithed;
 		this.bladedamage=bladedamage;this.bladeModel=bladeModel;this.bladeTexture=bladeTexture;
 		this.bladename=bladename;this.color=color;this.showName=showName;this.Enchantment=list;
+		this.seLevel=SELevel;this.seName=SEName;
 	}
 	 @SubscribeEvent
 	public void Init(InitEvent event) {
@@ -40,7 +41,8 @@ public class ItemCustomBlade {
 	      NBTTagCompound tag = new NBTTagCompound();
 	      customblade.setTagCompound(tag);
 	      customblade.setStackDisplayName(showName);
-	      SpecialEffects.addEffect(customblade, "TestSE", 50);
+	      if(this.seName!=null)
+	    	  SpecialEffects.addEffect(customblade, seName, seLevel);
 	      ItemSlashBladeNamed.CurrentItemName.set(tag, bladename);
 	      ItemSlashBladeNamed.CustomMaxDamage.set(tag, bladeduration);
 	      ItemXCustomizedSTDBlade.setBaseAttackModifier(tag,  bladedamage);

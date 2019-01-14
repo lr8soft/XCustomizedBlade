@@ -37,7 +37,8 @@ public class ConfigJsonReader {
 	}
 	public void itemInit() {
 		this.datalen=jsondata.size();
-		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null,recipeSource=null;
+		String SEName=null;
+		int i,sa = 1,standby=1,duration=200,color=16744192,SELevel=0;boolean iswithed=false;JsonArray Enchantment=null,recipeItems=null,recipeSource=null;
 		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;
 		String[] recipeName= new String[10];
 		String[] recipeSourceName= new String[9];
@@ -65,9 +66,16 @@ public class ConfigJsonReader {
 				Enchantment=null;
 				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t enchantment.");
 			}
+			try {
+				SELevel=temp.get("SELevel").getAsInt();
+				SEName=temp.get("BladeSE").getAsString();
+			}catch(NullPointerException e) {
+				SELevel=0;SEName=null;
+				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t SE.");
+			}
 			if(bladename==null||bladeModel==null||bladeTexture==null||showName==null) continue;
 			ItemCustomBlade blade=new ItemCustomBlade(sa,standby,duration,color,
-					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment);
+					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,SEName,SELevel);
 			SlashBlade.InitEventBus.register(blade);
 		}
 		
@@ -75,7 +83,8 @@ public class ConfigJsonReader {
 	public XCDJsonInfo[] GetInfo() {
 		XCDJsonInfo[] info = new XCDJsonInfo[jsondata.size()];
 		this.datalen=jsondata.size();
-		int i,sa = 1,standby=1,duration=200,color=16744192;boolean iswithed=false;JsonArray Enchantment=null;
+		String SEName=null;
+		int i,sa = 1,standby=1,duration=200,color=16744192,SELevel=0;boolean iswithed=false;JsonArray Enchantment=null;
 		float bladedamage=10;String bladename=null,bladeModel=null,bladeTexture=null,showName=null;
 		for(i=0;i<jsondata.size();i++) {
 			JsonObject temp=jsondata.get(i).getAsJsonObject();
@@ -101,8 +110,15 @@ public class ConfigJsonReader {
 				Enchantment=null;
 				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t enchantment.");
 			}
+			try {
+				SELevel=temp.get("SELevel").getAsInt();
+				SEName=temp.get("BladeSE").getAsString();
+			}catch(NullPointerException e) {
+				SELevel=0;SEName=null;
+				System.out.println("XCustomizedBlade Warning:"+bladename+":"+showName+" haven\'t SE.");
+			}
 			info[i]=new XCDJsonInfo(sa,standby,duration,color,
-					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment);
+					iswithed,bladedamage,bladename,showName,bladeModel,bladeTexture,Enchantment,SEName,SELevel);
 		}
 		return info;
 		
@@ -126,24 +142,35 @@ public class ConfigJsonReader {
 					}else {
 						if(this.isServer) {
 							System.out.println("XCustomizedBlade:SERVER Now start.");
-							XCBConfigServerSync tcpServer=new XCBConfigServerSync(
-									json.get("XCustomizedBladeConfig").getAsJsonArray(),
-									json.get("XCustomizedSA").getAsJsonArray()
-									,serverport);
-							tcpServer.start();
+							try {
+								XCBConfigServerSync tcpServer=new XCBConfigServerSync(
+										json.get("XCustomizedBladeConfig").getAsJsonArray(),
+										json.get("XCustomizedSA").getAsJsonArray(),
+										json.get("XCustomizedSE").getAsJsonArray()
+										,serverport);
+								tcpServer.start();
+							}catch(NullPointerException e) {
+								System.out.println("XCB TinyCore:Can\'t start sync!");
+								e.printStackTrace();
+							}
 						}else {
 							System.out.println("XCustomizedBlade:Start to connect with SERVER.");
-							XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,
-									json.get("XCustomizedBladeConfig").getAsJsonArray(),
-									json.get("XCustomizedSA").getAsJsonArray(),
-									hostname,serverport);
-							tcpClient.ConfigStartSync();
+							try {
+								XCBConfigClientSync tcpClient=new XCBConfigClientSync(json,
+										json.get("XCustomizedBladeConfig").getAsJsonArray(),
+										json.get("XCustomizedSA").getAsJsonArray(),
+										json.get("XCustomizedSE").getAsJsonArray(),
+										hostname,serverport);
+								tcpClient.ConfigStartSync();
+							}catch(NullPointerException e2) {
+								System.out.println("XCB TinyCore:Can\'t start sync from SERVER!");
+								e2.printStackTrace();
+							}
 						}
 					}
 				}catch(Exception e) {
 					System.out.println("XCustomizedBlade:No server info!");
 				}
-
 			}
 			jsondata=json.get("XCustomizedBladeConfig").getAsJsonArray();
 			return 1;

@@ -7,4 +7,5 @@ public class XCustomizedSEStandard {
 		this.SEName=name;this.SECost=cost;this.SELevel=level;this.SEStep=step;
 		this.SERuntime=runtime;this.SEDamage=damage;
 	}
+	
 }

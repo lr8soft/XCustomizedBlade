@@ -12,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.47,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.50,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": false,\r\n" + 
 				"  \"XCBTinyCore\": true,\r\n" + 
@@ -23,19 +23,6 @@ public class ModInit {
 				"  },\r\n" + 
 				"  \"XCustomizedBladeConfig\": [\r\n" + 
 				"    {\r\n" + 
-				"      \"BladeName\": \"testblade\",\r\n" + 
-				"      \"BladeShowName\": \"TestBlade[Origin]\",\r\n" + 
-				"      \"BladeModel\": \"model/1\",\r\n" + 
-				"      \"BladeTexture\": \"texture/1\",\r\n" + 
-				"      \"BladeDamge\": 12.0,\r\n" + 
-				"      \"BladeDuration\": 200,\r\n" + 
-				"      \"BladeWitched\": false,\r\n" + 
-				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 1,\r\n" + 
-				"      \"SwordColor\": 16711935\r\n" + 
-				"    },\r\n" + 
-				"    {},\r\n" + 
-				"    {\r\n" + 
 				"      \"BladeName\": \"TestBlade[Technology Revolution]\",\r\n" + 
 				"      \"Enchantment\": [ \"power\", 12, \"sharpness\", 12 ],\r\n" + 
 				"      \"BladeShowName\": \"测之刃【技术革新】\",\r\n" + 
@@ -45,31 +32,9 @@ public class ModInit {
 				"      \"BladeDuration\": 1200,\r\n" + 
 				"      \"BladeWitched\": false,\r\n" + 
 				"      \"BladeStandBy\": 1,\r\n" + 
-				"      \"BladeSA\": 8,\r\n" + 
-				"      \"SwordColor\": 16744192\r\n" + 
-				"    },\r\n" + 
-				"    {\r\n" + 
-				"      \"BladeName\": \"testblade2\",\r\n" + 
-				"      \"BladeShowName\": \"TestBlade[Second]\",\r\n" + 
-				"      \"BladeModel\": \"model/1\",\r\n" + 
-				"      \"BladeTexture\": \"texture/1\",\r\n" + 
-				"      \"BladeDamge\": 18.0,\r\n" + 
-				"      \"BladeDuration\": 200,\r\n" + 
-				"      \"BladeWitched\": true,\r\n" + 
-				"      \"BladeStandBy\": 2,\r\n" + 
-				"      \"BladeSA\": 7,\r\n" + 
-				"      \"SwordColor\": 16744192\r\n" + 
-				"    },\r\n" + 
-				"    {\r\n" + 
-				"      \"BladeName\": \"satest\",\r\n" + 
-				"      \"BladeShowName\": \"SA测试拔刀剑\",\r\n" + 
-				"      \"BladeModel\": \"model/1\",\r\n" + 
-				"      \"BladeTexture\": \"texture/2\",\r\n" + 
-				"      \"BladeDamge\": 18.0,\r\n" + 
-				"      \"BladeDuration\": 200,\r\n" + 
-				"      \"BladeWitched\": true,\r\n" + 
-				"      \"BladeStandBy\": 0,\r\n" + 
 				"      \"BladeSA\": 123,\r\n" + 
+				"      \"BladeSE\": \"TestSE\",\r\n" + 
+				"      \"SELevel\": 15,\r\n" + 
 				"      \"SwordColor\": 16744192\r\n" + 
 				"    }\r\n" + 
 				"  ],\r\n" + 
@@ -81,7 +46,18 @@ public class ModInit {
 				"      \"SAInfo\": [ \"EP\", \"SD\", \"PS\", \"MB\", \"LN\" ],\r\n" + 
 				"      \"StepDamage\": [ 10, 10, 3, 3, 10 ],\r\n" + 
 				"      \"SAStep\": [ 5, 1, 100, 2, 5 ],\r\n" + 
-				"      \"SACount\": 5\r\n" + 
+				"      \"SACount\": 5,\r\n" + 
+				"      \"PeaceSelector\": true\r\n" + 
+				"    }\r\n" + 
+				"  ],\r\n" + 
+				"  \"XCustomizedSE\": [\r\n" + 
+				"    {\r\n" + 
+				"      \"SEName\": \"TestSE\",\r\n" + 
+				"      \"SECost\": 10,\r\n" + 
+				"      \"SELevel\": 15,\r\n" + 
+				"      \"SEStep\": [ \"PE\", \"SD\", \"PS\" ],\r\n" + 
+				"      \"SERuntime\": [ 12, 10, 3 ],\r\n" + 
+				"      \"SEDamage\": [ 100, 1, 100 ]\r\n" + 
 				"    }\r\n" + 
 				"  ]\r\n" + 
 				"}";

@@ -54,7 +54,7 @@ public class SEJsonReader {
 						stepRuntime[len]=runtime.get(len).getAsInt();
 						stepDamage[len]=damage.get(len).getAsDouble();
 					}
-					if(name==null||stepName==null||stepRuntime==null||stepDamage==null) continue;
+					if(name==null||step==null||runtime==null||damage==null) continue;
 					XCustomizedSEStandard SEInfo=new XCustomizedSEStandard(name,cost,level,stepName,stepRuntime,stepDamage);
 					SpecialEffects.register(new XCustomziedSpecialEffect(SEInfo));
 				}catch(Exception error) {
