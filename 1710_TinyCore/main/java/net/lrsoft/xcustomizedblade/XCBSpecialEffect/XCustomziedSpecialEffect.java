@@ -24,6 +24,36 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
         return true;
     }
     @SubscribeEvent
+    public void onImpactEffectEvent(SlashBladeEvent.ImpactEffectEvent event){
+
+        if(!useBlade(event.sequence)) return;
+
+        if(!SpecialEffects.isPlayer(event.user)) return;
+        EntityPlayer player = (EntityPlayer) event.user;
+        World world = player.worldObj;
+        NBTTagCompound tag = ItemSlashBlade.getItemTagCompound(event.blade);
+        switch (SpecialEffects.isEffective(player, event.blade, this)){
+            case None:
+                return;
+            case Effective:
+            	if(event.target.getRNG().nextInt(2) != 0) return;
+                if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
+                    ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
+                 }
+                 XCustomizedSEWork SpecialEffect=new XCustomizedSEWork(SEInfo.SEStep,SEInfo.SERuntime,SEInfo.SEDamage);
+                 SpecialEffect.workToSE(world,player);
+                break;
+            case NonEffective:
+                if(event.target.getRNG().nextInt(5) != 0) return;
+                break;
+        }
+
+        event.target.addPotionEffect(new PotionEffect(Potion.wither.getId(),20 * 5,1));
+        player.onEnchantmentCritical(event.target);
+
+    }
+
+    @SubscribeEvent
     public void onUpdateItemSlashBlade(SlashBladeEvent.OnUpdateEvent event){
         if(!SpecialEffects.isPlayer(event.entity)) return; 
         EntityPlayer player = (EntityPlayer) event.entity;
@@ -36,11 +66,7 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
             case NonEffective:
                 break;
             case Effective:
-                if(!ItemSlashBlade.ProudSoul.tryAdd(tag,-SEInfo.SECost,false)){
-                   ItemSlashBlade.damageItem(event.blade, SEInfo.SECost, player);
-                }
-                XCustomizedSEWork SpecialEffect=new XCustomizedSEWork(SEInfo.SEStep,SEInfo.SERuntime,SEInfo.SEDamage);
-                SpecialEffect.workToSE(world,player);
+            //	if(event.target.getRNG().nextInt(2) != 0) return;
             	break;
         }
     }
