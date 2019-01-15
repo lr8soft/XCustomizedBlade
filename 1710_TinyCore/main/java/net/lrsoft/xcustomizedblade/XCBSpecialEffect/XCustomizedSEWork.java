@@ -61,74 +61,10 @@ public class XCustomizedSEWork {
 		}
 	}
 	public void workPotionEffect(EntityPlayer player,int type,float time) {
-		switch(type) {
-			case 0://blindness
-				player.addPotionEffect(new PotionEffect(Potion.blindness.getId(),(int)time,2));
-				break;
-			case 1://confusion
-				player.addPotionEffect(new PotionEffect(Potion.confusion.getId(),(int)time,2));
-				break;
-			case 2://damageBoost
-				player.addPotionEffect(new PotionEffect(Potion.damageBoost.getId(),(int)time,2));
-				break;
-			case 3://digSlowdown
-				player.addPotionEffect(new PotionEffect(Potion.digSlowdown.getId(),(int)time,2));
-				break;
-			case 4://digSpeed
-				player.addPotionEffect(new PotionEffect(Potion.digSpeed.getId(),(int)time,2));
-				break;
-			case 5://fireResistance
-				player.addPotionEffect(new PotionEffect(Potion.fireResistance.getId(),(int)time,2));
-				break;
-			case 6://harm
-				player.addPotionEffect(new PotionEffect(Potion.harm.getId(),(int)time,2));
-				break;
-			case 7://heal
-				player.addPotionEffect(new PotionEffect(Potion.heal.getId(),(int)time,2));
-				break;
-			case 8://hunger
-				player.addPotionEffect(new PotionEffect(Potion.hunger.getId(),(int)time,2));
-				break;
-			case 9://invisibility
-				player.addPotionEffect(new PotionEffect(Potion.invisibility.getId(),(int)time,2));
-				break;
-			case 10://jump
-				player.addPotionEffect(new PotionEffect(Potion.jump.getId(),(int)time,2));
-				break;
-			case 11://moveSlowdown
-				player.addPotionEffect(new PotionEffect(Potion.moveSlowdown.getId(),(int)time,2));
-				break;
-			case 12://moveSpeed
-				player.addPotionEffect(new PotionEffect(Potion.moveSpeed.getId(),(int)time,2));
-				break;
-			case 13://nightVision
-				player.addPotionEffect(new PotionEffect(Potion.nightVision.getId(),(int)time,2));
-				break;
-			case 14://poison
-				player.addPotionEffect(new PotionEffect(Potion.poison.getId(),(int)time,2));
-				break;
-			case 15://regeneration
-				player.addPotionEffect(new PotionEffect(Potion.regeneration.getId(),(int)time,2));
-				break;
-			case 16://resistance
-				player.addPotionEffect(new PotionEffect(Potion.resistance.getId(),(int)time,2));
-				break;
-			case 17://waterBreathing
-				player.addPotionEffect(new PotionEffect(Potion.waterBreathing.getId(),(int)time,2));
-				break;
-			case 18://weakness
-				player.addPotionEffect(new PotionEffect(Potion.weakness.getId(),(int)time,2));
-				break;
-			case 19://wither
-				player.addPotionEffect(new PotionEffect(Potion.wither.getId(),(int)time,2));
-				break;
-			default:
-				try {
-					player.addPotionEffect(new PotionEffect(type,(int)time,2));
-				}catch(Exception e) {
-					System.out.println("XCustomizedSE:Invalid PotionEffect ID.");
-				}
-				
+		try {
+			player.addPotionEffect(new PotionEffect(type,(int)time,2));
+		}catch(Exception e) {
+			System.out.println("XCustomizedSE:Invalid PotionEffect ID.");
 		}
 	}
 	public void workSlashDimension(World world,EntityPlayer player,float damage) {
@@ -182,7 +118,6 @@ public class XCustomizedSEWork {
 	public void workSakuraEnd(World world,EntityPlayer player,int runtime) {
 		for(int i=0;i<runtime;i++) {
 	        EntitySakuraEndManager entityDA = new EntitySakuraEndManager(world, player);
-	        entityDA.setInvisible(true);
 	        if (entityDA != null) {
 	            world.spawnEntityInWorld(entityDA);
 	        }
@@ -200,6 +135,7 @@ public class XCustomizedSEWork {
 		Entity target=getEntityToWatch(player);
 		if(target==null) return;
 		for(int i=0;i<runtime;i++) {
+			if(target==null) return;
 			world.addWeatherEffect(new EntityLightningBolt(world,target.posX,target.posY,target.posZ));
 		}
 	}
