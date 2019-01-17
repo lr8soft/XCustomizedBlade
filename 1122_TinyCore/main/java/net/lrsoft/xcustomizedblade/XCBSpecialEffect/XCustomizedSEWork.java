@@ -18,6 +18,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -121,6 +122,13 @@ public class XCustomizedSEWork {
 			case 19://wither
 				player.addPotionEffect(new PotionEffect(MobEffects.WITHER,(int)time,2));
 				break;
+		}
+	}
+	public void workDamage(EntityPlayer player,EntityLivingBase target,float damage) {
+		try{
+		      target.attackEntityFrom(DamageSource.causePlayerDamage(player),damage);
+		}catch(Exception k){
+			  target.setHealth(target.getHealth()-damage);
 		}
 	}
 	public void workSlashDimension(World world,EntityPlayer player,float damage) {

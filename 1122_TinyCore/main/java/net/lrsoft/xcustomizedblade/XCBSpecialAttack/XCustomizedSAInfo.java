@@ -20,6 +20,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -51,19 +52,19 @@ public class XCustomizedSAInfo {
 				workPhantomSword(world,player,target,this.StepDamage[i],this.SACount[i]);
 				break;
 			case "SE":
-				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workDamage(player,target,StepDamage[i]);
 				workSakuraEnd(world,player,this.SACount[i]);
 				break;
 			case "LN":
-				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workDamage(player,target,StepDamage[i]);
 				workThunder(world,target,this.SACount[i]);
 				break;
 			case "MB":
-				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workDamage(player,target,StepDamage[i]);
 				workMaximumBet(world,player,this.SACount[i]);
 				break;
 			case "SP":
-				target.setHealth(target.getHealth()-this.StepDamage[i]);
+				workDamage(player,target,StepDamage[i]);
 				workSpear(world,player,this.SACount[i]);
 				break;
 			case "EP":
@@ -100,6 +101,13 @@ public class XCustomizedSAInfo {
 		 File file=new File(InfoShow.getNowPath()+"/XCB_DELAY_TEMP.dat");
          if(file.exists())
              file.delete();
+	}
+	public void workDamage(EntityPlayer player,EntityLivingBase target,float damage) {
+		try{
+		      target.attackEntityFrom(DamageSource.causePlayerDamage(player),damage);
+		}catch(Exception k){
+			  target.setHealth(target.getHealth()-damage);
+		}
 	}
 	public void workPhantomSword(World world,EntityPlayer player,EntityLivingBase target,float damage,int runtime) {
         for(int i=0;i<runtime;i++) {
