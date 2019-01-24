@@ -4,18 +4,22 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import mods.flammpfeil.slashblade.ability.StylishRankManager;
+import mods.flammpfeil.slashblade.entity.EntityDrive;
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
 import mods.flammpfeil.slashblade.entity.EntitySlashDimension;
 import mods.flammpfeil.slashblade.entity.EntitySpearManager;
 import mods.flammpfeil.slashblade.entity.EntityWitherSword;
 import mods.flammpfeil.slashblade.entity.selector.EntitySelectorAttackable;
+import mods.flammpfeil.slashblade.item.ItemSlashBlade;
 import net.minecraft.block.Block;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
@@ -56,6 +60,9 @@ public class XCustomizedSEWork {
 					break;
 				case "PE":
 					workPotionEffect(player,this.SERuntime[i],(float)this.SEDamage[i]);
+					break;
+				case "WE":
+					workWaveEdge(world,player,(float)this.SEDamage[i]);
 					break;
 			}
 		}
@@ -199,6 +206,54 @@ public class XCustomizedSEWork {
 		if(target==null) return;
 		world.createExplosion(player, target.posX, target.posY, target.posZ, (float)damage, false);
 	}
+	public void workCircleSlash(World world,EntityPlayer player,float magicDamage) {
+		   player.playSound(SoundEvents.ENTITY_BLAZE_HURT, 0.2F, 0.6F);
+		   AxisAlignedBB bb = player.getEntityBoundingBox();
+           bb = bb.grow(5.0f, 0.25f, 5.0f);
+           List<Entity> list = world.getEntitiesInAABBexcluding(player, bb, EntitySelectorAttackable.getInstance());
+
+           for(Entity curEntity : list){
+               StylishRankManager.setNextAttackType(player, StylishRankManager.AttackTypes.CircleSlash);
+               try {
+              	 if(player.getActiveItemStack().getItem() instanceof ItemSlashBlade)
+                  	 ((ItemSlashBlade)player.getActiveItemStack().getItem()).attackTargetEntity(player.getActiveItemStack(), 
+                  			 curEntity, player, true);
+               }catch(Exception error) {}
+                  player.onCriticalHit(curEntity);
+          }
+		 for(int i = 0; i < 6;i++){
+             EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,false,0);
+             entityDrive.setLocationAndAngles(player.posX,
+                     player.posY + (double)player.getEyeHeight()/2D,
+                     player.posZ,
+                     player.rotationYaw + 60 * i /*+ (entityDrive.getRand().nextFloat() - 0.5f) * 60*/,
+                     0);//(entityDrive.getRand().nextFloat() - 0.5f) * 60);
+             entityDrive.setDriveVector(0.5f);
+             entityDrive.setLifeTime(10);
+             entityDrive.setIsMultiHit(false);
+             entityDrive.setRoll(90.0f /*+ 120 * (entityDrive.getRand().nextFloat() - 0.5f)*/);
+             if (entityDrive != null) {
+                 world.spawnEntity(entityDrive);
+             }
+         }
+	}
+	public void workWaveEdge(World world,EntityPlayer player,float magicDamage) {
+			   final float[] speeds = {0.25f,0.3f,0.35f};
+		       for(int i = 0; i < speeds.length;i++){
+		           EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,false,0);
+		           entityDrive.setInitialSpeed(speeds[i]);
+		           if (entityDrive != null) {
+		               world.spawnEntity(entityDrive);
+		           }
+		       }
+		       {
+		           EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,true,0);
+		           entityDrive.setInitialSpeed(0.225f);
+		           if (entityDrive != null) {
+		               world.spawnEntity(entityDrive);
+		           }
+		       }
+	 }
 	 private Entity getEntityToWatch(EntityPlayer player){
 	    	World world = player.world;
 	        Entity target = null;

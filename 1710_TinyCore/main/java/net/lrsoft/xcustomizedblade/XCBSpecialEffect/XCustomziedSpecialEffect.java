@@ -28,9 +28,7 @@ public class XCustomziedSpecialEffect implements ISpecialEffect{
     }
     @SubscribeEvent
     public void onImpactEffectEvent(SlashBladeEvent.ImpactEffectEvent event){
-
         if(!useBlade(event.sequence)) return;
-
         if(!SpecialEffects.isPlayer(event.user)) return;
         EntityPlayer player = (EntityPlayer) event.user;
         World world = player.worldObj;

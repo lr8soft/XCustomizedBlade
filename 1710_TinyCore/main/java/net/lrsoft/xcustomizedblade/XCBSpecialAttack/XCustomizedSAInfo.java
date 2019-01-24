@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 
 import com.sun.javafx.geom.Vec3d;
 
@@ -12,7 +13,9 @@ import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import mods.flammpfeil.slashblade.EntityDirectAttackDummy;
+import mods.flammpfeil.slashblade.EntityDrive;
 import mods.flammpfeil.slashblade.ItemSlashBlade;
+import mods.flammpfeil.slashblade.ability.StylishRankManager;
 import mods.flammpfeil.slashblade.entity.EntityMaximumBetManager;
 import mods.flammpfeil.slashblade.entity.EntitySakuraEndManager;
 import mods.flammpfeil.slashblade.entity.EntitySlashDimension;
@@ -22,11 +25,13 @@ import mods.flammpfeil.slashblade.named.event.LoadEvent.InitEvent;
 import net.lrsoft.xcustomizedblade.InfoShow;
 import net.lrsoft.xcustomizedblade.XCBUtil.XCBDelayCreator;
 import net.minecraft.block.Block;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.effect.EntityLightningBolt;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.AxisAlignedBB;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.MovingObjectPosition;
 import net.minecraft.util.Vec3;
@@ -80,6 +85,12 @@ public class XCustomizedSAInfo {
 					break;
 				case "PE":
 					workPotionEffect(player,this.SACount[i],(float)this.StepDamage[i]);
+					break;
+				case "CS":
+					workCircleSlash(world,player,this.StepDamage[i]);
+					break;
+				case "WE":
+					workWaveEdge(world,player,this.StepDamage[i]);
 					break;
 				case "DL":
 					try {
@@ -209,6 +220,51 @@ public class XCustomizedSAInfo {
 		}catch(Exception e) {
 			System.out.println("XCustomizedSA:Invalid PotionEffect ID.");
 		}
+	}
+	public void workCircleSlash(World world,EntityPlayer player,float magicDamage) {
+			player.worldObj.playSoundAtEntity(player, "mob.blaze.hit", 0.2F, 0.6F);
+            AxisAlignedBB bb = player.boundingBox.copy();
+            bb = bb.expand(5.0f, 0.25f, 5.0f);
+            List<Entity> list = world.getEntitiesWithinAABBExcludingEntity(player, bb, ItemSlashBlade.AttackableSelector);
+            for(Entity curEntity : list){
+                 StylishRankManager.setNextAttackType(player, StylishRankManager.AttackTypes.CircleSlash);
+                 try {
+                	 if(player.getItemInUse().getItem() instanceof ItemSlashBlade)
+                    	 ((ItemSlashBlade)player.getItemInUse().getItem()).attackTargetEntity(player.getItemInUse(), 
+                    			 curEntity, player, true);
+                 }catch(Exception error) {}
+                    player.onCriticalHit(curEntity);
+            }
+            for(int i = 0; i < 6;i++){
+                EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,false,0);
+                entityDrive.setLocationAndAngles(player.posX,
+                        player.posY + (double)player.getEyeHeight()/2D,
+                        player.posZ,
+                        player.rotationYaw + 60 * i /*+ (entityDrive.getRand().nextFloat() - 0.5f) * 60*/,
+                        0);//(entityDrive.getRand().nextFloat() - 0.5f) * 60);
+                entityDrive.setDriveVector(0.5f);
+                entityDrive.setLifeTime(10);
+                entityDrive.setIsMultiHit(false);
+                entityDrive.setRoll(90.0f /*+ 120 * (entityDrive.getRand().nextFloat() - 0.5f)*/);
+                if (entityDrive != null) {
+                    world.spawnEntityInWorld(entityDrive);
+                }
+            }
+	}
+	public void workWaveEdge(World world,EntityPlayer player,float magicDamage) {
+            final float[] speeds = {0.25f,0.3f,0.35f};
+            for(int i = 0; i < speeds.length;i++){
+                EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,false,0);
+                entityDrive.setInitialSpeed(speeds[i]);
+                if (entityDrive != null) {
+                    world.spawnEntityInWorld(entityDrive);
+                }
+            }
+            EntityDrive entityDrive = new EntityDrive(world, player, magicDamage,true,0);
+            entityDrive.setInitialSpeed(0.225f);
+            if (entityDrive != null) {
+               world.spawnEntityInWorld(entityDrive);
+            }
 	}
 	@SubscribeEvent
 	public void init(InitEvent event) {
