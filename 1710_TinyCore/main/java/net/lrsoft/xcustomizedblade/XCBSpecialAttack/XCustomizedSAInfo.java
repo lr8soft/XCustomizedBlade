@@ -97,6 +97,9 @@ public class XCustomizedSAInfo {
 						workDelay(world,player,this.SACount[i]);
 					}catch(NoSuchMethodError e) {}
 					break;
+				case "SETD":
+					workSetDead(target);
+					break;
 			}
 		}
 	}
@@ -124,6 +127,9 @@ public class XCustomizedSAInfo {
 		}catch(Exception k){
 			  target.setHealth(target.getHealth()-damage);
 		}
+	}
+	public void workSetDead(EntityLivingBase target) {
+		target.setDead();
 	}
 	public void workPhantomSword(World world,EntityPlayer player,EntityLivingBase target,float damage,int runtime) {
         for(int i=0;i<runtime;i++) {

@@ -91,6 +91,9 @@ public class XCustomizedSAInfo {
 			case "WE":
 				workWaveEdge(world,player,this.StepDamage[i]);
 				break;
+			case "SETD":
+				workSetDead(target);
+				break;
 			}
 		}
 	}
@@ -111,6 +114,9 @@ public class XCustomizedSAInfo {
 		 File file=new File(InfoShow.getNowPath()+"/XCB_DELAY_TEMP.dat");
          if(file.exists())
              file.delete();
+	}
+	public void workSetDead(EntityLivingBase target) {
+		target.setDead();
 	}
 	public void workDamage(EntityPlayer player,EntityLivingBase target,float damage) {
 		try{

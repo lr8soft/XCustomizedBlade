@@ -12,7 +12,7 @@ public class ModInit {
 	public ModInit() {
 		this.path=InfoShow.getNowPath()+"/XCustomizedBlade.json";
 		this.STDJsonConfig="{\r\n" + 
-				"  \"XCustomizedBladeVER\": 1.60,\r\n" + 
+				"  \"XCustomizedBladeVER\": 1.61,\r\n" + 
 				"  \"CustomizedRecipe\": true,\r\n" + 
 				"  \"ToolRecipe\": false,\r\n" + 
 				"  \"XCBTinyCore\": true,\r\n" + 
